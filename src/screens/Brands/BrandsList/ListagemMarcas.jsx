@@ -3,7 +3,7 @@ import { DataGrid } from '@material-ui/data-grid';
 import AddIcon from '@material-ui/icons/Add';
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import MarcaService from '../services/MarcaService';
+import MarcaService from '../../../services/MarcaService';
 
 const colunas = [{ field: 'nome', headerName: 'Marca', width: 200 }];
 
