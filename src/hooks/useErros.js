@@ -24,14 +24,14 @@ function useErros(validacoes) {
     }
 
     function possoEnviar() {
-        const errosKeys = Object.keys(erros);
-        const checkErros = errosKeys.forEach((campo) => {
-            if (!errosKeys[campo].valido) {
+        const errosEntries = Object.entries(erros);
+        return errosEntries.some((entry) => {
+            const [, value] = entry;
+            if (!value.valido) {
                 return false;
             }
             return true;
         });
-        return checkErros.some(false);
     }
 
     return [erros, validarCampos, possoEnviar];
