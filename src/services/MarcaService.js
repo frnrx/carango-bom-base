@@ -7,14 +7,14 @@ const MarcaService = {
   },
 
   alterar(marca) {
-    return fetch('https://carango-bom-api.herokuapp.com/marcas/' + marca.id, {
+    return fetch(`https://carango-bom-api.herokuapp.com/marcas/${marca.id}`, {
       method: 'PUT',
       body: JSON.stringify(marca)
     }).then(r => r.json());
   },
 
   consultar(id) {
-    return fetch('https://carango-bom-api.herokuapp.com/marcas/' + id).then(r => r.json());
+    return fetch(`https://carango-bom-api.herokuapp.com/marcas/${id}`).then(r => r.json());
   },
 
   listar() {
@@ -22,7 +22,7 @@ const MarcaService = {
   },
 
   excluir(marca) {
-    return fetch('https://carango-bom-api.herokuapp.com/marcas/' + marca.id, {
+    return fetch(`https://carango-bom-api.herokuapp.com/marcas/${marca.id}`, {
       method: 'DELETE',
     })
       .then(r => r.json());
