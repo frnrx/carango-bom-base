@@ -1,4 +1,4 @@
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen, fireEvent, waitFor, getByText } from '@testing-library/react';
 
 import Login from '..';
 import { login } from '../services';
@@ -39,18 +39,24 @@ describe('Login form', () => {
       },
     });
 
+    fireEvent.focusOut(usernameInput);
+
     fireEvent.change(passwordInput, {
       target: {
-        value: '1234',
+        value: '123456',
       },
     });
 
+    fireEvent.focusOut(passwordInput);
+
+    expect(submitButton).not.toBeDisabled();
+
     fireEvent.click(submitButton);
 
-    expect(login).toHaveBeenCalledWith('johndoe', '1234');
+    expect(login).toHaveBeenCalledWith('johndoe', '123456');
   });
 
-  it('should only enable the submit button when all fields are filled', () => {
+  it('should only enable the submit button when all fields are filled', async () => {
     expect(submitButton).toHaveAttribute('disabled');
 
     fireEvent.change(usernameInput, {
@@ -59,14 +65,50 @@ describe('Login form', () => {
       },
     });
 
+    fireEvent.focusOut(usernameInput);
+
     expect(submitButton).toHaveAttribute('disabled');
 
     fireEvent.change(passwordInput, {
       target: {
-        value: '1234',
+        value: '123456789',
       },
     });
 
-    expect(submitButton).not.toHaveAttribute('disabled');
+    fireEvent.focusOut(passwordInput);
+
+    expect(submitButton).not.toBeDisabled();
+  });
+
+  it('should keep the button disabled when the username don`t meet the requirements', () => {
+    fireEvent.change(usernameInput, {
+      target: {
+        value: 'joe',
+      },
+    });
+
+    fireEvent.focusOut(usernameInput);
+
+    const errorText = screen.getByText('Usuário deve ter ao menos 4 caracteres.');
+
+    expect(errorText).toBeInTheDocument();
+
+    expect(submitButton).toHaveAttribute('disabled');
+  });
+
+  it('should keep the button disabled when the password don`t meet the requirements', () => {
+    fireEvent.change(passwordInput, {
+      target: {
+        value: '123',
+      },
+    });
+
+    fireEvent.focusOut(passwordInput);
+
+    const errorText = screen.getByText('Senha deve ter ao menos 6 caracteres.');
+
+    expect(errorText).toBeInTheDocument();
+
+    expect(submitButton).toHaveAttribute('disabled');
   });
 });

@@ -1,14 +1,18 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState } from 'react';
 import { TextField, Button, Grid } from '@material-ui/core';
+
+import useErrors from '../../hooks/useErrors';
 
 import { login } from './services';
 import { useStyles } from './styles';
+import validations from './validations';
 
 const Login = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
   const classes = useStyles();
+  const [errors, validateFields, isFormValid] = useErrors(validations);
 
   const onSubmit = (event) => {
     event.preventDefault();
@@ -24,8 +28,6 @@ const Login = () => {
     setPassword(event.target.value);
   };
 
-  const validateFields = useMemo(() => username && password, [username, password]);
-
   return (
     <form onSubmit={onSubmit}>
       <Grid container direction="column" spacing={2} alignContent="center">
@@ -39,6 +41,9 @@ const Login = () => {
             role="textbox"
             onChange={handleUpdateUsername}
             variant="outlined"
+            onBlur={validateFields}
+            helperText={errors.username.text}
+            error={errors.username.showError}
           />
         </Grid>
         <Grid container item xs={6}>
@@ -51,6 +56,9 @@ const Login = () => {
             role="textbox"
             onChange={handleUpdatePassword}
             variant="outlined"
+            onBlur={validateFields}
+            helperText={errors.password.text}
+            error={errors.password.showError}
           />
         </Grid>
         <Grid item xs={6}>
@@ -60,7 +68,7 @@ const Login = () => {
             fullWidth
             color="primary"
             className={classes.sumbitButton}
-            disabled={!validateFields}
+            disabled={!isFormValid()}
           >
             Logar
           </Button>
