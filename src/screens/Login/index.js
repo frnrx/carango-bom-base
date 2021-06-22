@@ -1,22 +1,25 @@
-import React, { useState } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 import { TextField, Button, Grid } from '@material-ui/core';
 
 import useErrors from '../../hooks/useErrors';
+import Authentication from '../../contexts/authentication';
 
 import { login } from './services';
 import { useStyles } from './styles';
 import validations from './validations';
 
 const Login = () => {
+  const history = useHistory();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const { isLoggedIn } = useContext(Authentication);
 
   const classes = useStyles();
   const [errors, validateFields, isFormValid] = useErrors(validations);
 
   const onSubmit = (event) => {
     event.preventDefault();
-
     login(username, password);
   };
 
@@ -27,6 +30,12 @@ const Login = () => {
   const handleUpdatePassword = (event) => {
     setPassword(event.target.value);
   };
+
+  useEffect(() => {
+    if(isLoggedIn) {
+      history.push('/');
+    }
+  }, []);
 
   return (
     <form onSubmit={onSubmit}>
