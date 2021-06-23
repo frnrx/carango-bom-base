@@ -20,6 +20,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --coverage",
+    "test:ci": "CI=true react-scripts test --coverage --testResultsProcessor=jest-sonar-reporter",
     "test:dev": "react-scripts test",
     "eject": "react-scripts eject"
   },
@@ -50,6 +51,7 @@
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-import": "^2.23.4",
     "eslint-plugin-react": "^7.24.0",
+    "jest-sonar-reporter": "^2.0.0",
     "prettier": "^2.3.1",
     "pretty-quick": "^3.1.1"
   }
