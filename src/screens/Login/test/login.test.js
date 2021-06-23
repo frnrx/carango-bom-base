@@ -1,9 +1,20 @@
-import { render, screen, fireEvent, waitFor, getByText } from '@testing-library/react';
+import React from 'react';
+import { render, screen, fireEvent, } from '@testing-library/react';
 
 import Login from '..';
 import { login } from '../services';
 
+import Authentication from '../../../contexts/authentication';
+
+const mockHistoryPush = jest.fn();
+
 jest.mock('../services');
+jest.mock('react-router-dom', () => ({
+  ...jest.requireActual('react-router-dom'),
+  useHistory: () => ({
+    push: mockHistoryPush,
+  }),
+}));
 
 describe('Login screen', () => {
   it('should match the snapshot', () => {
@@ -110,5 +121,33 @@ describe('Login form', () => {
     expect(errorText).toBeInTheDocument();
 
     expect(submitButton).toHaveAttribute('disabled');
+  });
+});
+
+describe('login verification', () => {
+  it('should redirect the user to the home if they are already logged', () => {
+    const mockedState = {
+      isLoggedIn: true,
+    };
+    render(
+      <Authentication.Provider value={mockedState}>
+        <Login />
+      </Authentication.Provider>
+    );
+
+    expect(mockHistoryPush).toHaveBeenCalledWith('/');
+  });
+
+  it('should not redirect the user to the home if they are not logged', () => {
+    const mockedState = {
+      isLoggedIn: false,
+    };
+    render(
+      <Authentication.Provider value={mockedState}>
+        <Login />
+      </Authentication.Provider>
+    );
+
+    expect(mockHistoryPush).not.toHaveBeenCalledWith('/');
   });
 });
