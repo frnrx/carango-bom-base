@@ -56,7 +56,7 @@ describe('Login form', () => {
     expect(login).toHaveBeenCalledWith('johndoe', '123456');
   });
 
-  it('should only enable the submit button when all fields are filled', async () => {
+  it('should only enable the submit button when all fields are filled', () => {
     expect(submitButton).toHaveAttribute('disabled');
 
     fireEvent.change(usernameInput, {
