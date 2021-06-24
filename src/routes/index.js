@@ -5,14 +5,16 @@ import BrandRegistry from '../screens/Brands/BrandRegistry';
 import BrandsList from '../screens/Brands/BrandsList';
 import Login from '../screens/Login';
 
+import PrivateRoute from './PrivateRoute';
+
 const Routes = () => (
   <Switch>
-    <Route path="/cadastro-marca">
+    <PrivateRoute path="/cadastro-marca">
       <BrandRegistry />
-    </Route>
-    <Route path="/alteracao-marca/:id">
+    </PrivateRoute>
+    <PrivateRoute path="/alteracao-marca/:id">
       <BrandRegistry />
-    </Route>
+    </PrivateRoute>
     <Route path="/login">
       <Login />
     </Route>

@@ -32,7 +32,7 @@ const Login = () => {
   };
 
   useEffect(() => {
-    if(isLoggedIn) {
+    if (isLoggedIn) {
       history.push('/');
     }
   }, []);
