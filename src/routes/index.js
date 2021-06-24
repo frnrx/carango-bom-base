@@ -4,6 +4,7 @@ import { Switch } from 'react-router-dom';
 import BrandRegistry from '../screens/Brands/BrandRegistry';
 import BrandsList from '../screens/Brands/BrandsList';
 import Login from '../screens/Login';
+import VehiclesList from '../screens/Vehicles/VehiclesList';
 
 import AuthenticationRoute from './AuthenticationRoute';
 
@@ -27,8 +28,8 @@ const Routes = () => (
     <AuthenticationRoute exact path="/login">
       <Login />
     </AuthenticationRoute>
-    <AuthenticationRoute path="/">
-      <div>veículos</div>
+    <AuthenticationRoute exact path="/">
+      <VehiclesList />
     </AuthenticationRoute>
   </Switch>
 );
