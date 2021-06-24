@@ -4,7 +4,7 @@ const createInitialState = (validations) => {
   const initialState = {};
   const validationKeys = Object.keys(validations);
   validationKeys.forEach((field) => {
-    initialState[field] = { valid: true, text: '' };
+    initialState[field] = { valid: false, text: '', showError: false };
   });
 
   return initialState;
@@ -24,12 +24,11 @@ const useErrors = (validations) => {
 
   const isFormValid = () => {
     const errosEntries = Object.entries(errors);
-    return errosEntries.some((entry) => {
+
+    return !errosEntries.some((entry) => {
       const [, value] = entry;
-      if (!value.valid) {
-        return false;
-      }
-      return true;
+
+      return value.valid === false;
     });
   };
 
