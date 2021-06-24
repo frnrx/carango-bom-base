@@ -10,6 +10,7 @@ const PrivateRoute = ({ children, path }) => {
 
   if (!isLoggedIn) {
     history.push('/login');
+    return null;
   }
 
   return <Route path={path}>{children}</Route>;
