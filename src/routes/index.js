@@ -1,26 +1,26 @@
 import React from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { Switch } from 'react-router-dom';
 
 import BrandRegistry from '../screens/Brands/BrandRegistry';
 import BrandsList from '../screens/Brands/BrandsList';
 import Login from '../screens/Login';
 
-import PrivateRoute from './PrivateRoute';
+import CustomRoute from './CustomRoute';
 
 const Routes = () => (
   <Switch>
-    <PrivateRoute path="/cadastro-marca">
+    <CustomRoute path="/cadastro-marca" isPrivate>
       <BrandRegistry />
-    </PrivateRoute>
-    <PrivateRoute path="/alteracao-marca/:id">
+    </CustomRoute>
+    <CustomRoute path="/alteracao-marca/:id" isPrivate>
       <BrandRegistry />
-    </PrivateRoute>
-    <Route path="/login">
+    </CustomRoute>
+    <CustomRoute path="/login">
       <Login />
-    </Route>
-    <Route path="/">
+    </CustomRoute>
+    <CustomRoute path="/">
       <BrandsList />
-    </Route>
+    </CustomRoute>
   </Switch>
 );
 
