@@ -2,9 +2,9 @@ import React from 'react';
 import { Container, CssBaseline } from '@material-ui/core';
 import { ThemeProvider } from '@material-ui/core/styles';
 
-import Routes from '../routes';
-import useAuth from '../hooks/useAuth';
-import Authentication from '../contexts/authentication';
+import Routes from '../../routes';
+import useAuth from '../../hooks/useAuth';
+import Authentication from '../../contexts/authentication';
 import { useStyles, muiTheme } from './styles';
 
 const App = () => {
