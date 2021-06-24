@@ -70,17 +70,29 @@ const Login = () => {
             error={errors.password.showError}
           />
         </Grid>
-        <Grid item xs={6}>
-          <Button
-            type="submit"
-            variant="contained"
-            fullWidth
-            color="primary"
-            className={classes.sumbitButton}
-            disabled={!isFormValid()}
-          >
-            Logar
-          </Button>
+        <Grid item container justify="space-between" xs={6}>
+          <Grid item className={classes.buttonContainer}>
+            <Button
+              fullWidth
+              variant="contained"
+              className={classes.button}
+              onClick={() => history.push('/')}
+            >
+              Voltar
+            </Button>
+          </Grid>
+          <Grid item className={classes.buttonContainer}>
+            <Button
+              fullWidth
+              type="submit"
+              variant="contained"
+              color="primary"
+              disabled={!isFormValid()}
+              className={classes.button}
+            >
+              Logar
+            </Button>
+          </Grid>
         </Grid>
       </Grid>
     </form>
