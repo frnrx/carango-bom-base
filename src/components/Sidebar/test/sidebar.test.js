@@ -1,5 +1,5 @@
 import React from 'react';
-import { render } from '@testing-library/react';
+import { cleanup, fireEvent, render } from '@testing-library/react';
 import { Router } from 'react-router-dom';
 import { createMemoryHistory } from 'history';
 
@@ -41,5 +41,33 @@ describe('Sidebar component', () => {
       </Authentication.Provider>,
     );
     expect(container.firstChild).toMatchSnapshot();
+  });
+});
+
+describe('Sidebar state behavior', () => {
+  it('should logout when the users click on Sair', async () => {
+    cleanup();
+    const history = createMemoryHistory();
+
+    const mockedState = {
+      isLoggedIn: true,
+      logout: jest.fn(),
+    };
+
+    const { getByText } = render(
+      <Authentication.Provider value={mockedState}>
+        <Router history={history}>
+          <Sidebar />
+        </Router>
+      </Authentication.Provider>,
+    );
+
+    const logoutButton = getByText('Sair');
+
+    expect(logoutButton).toBeInTheDocument();
+
+    fireEvent.click(logoutButton);
+
+    expect(mockedState.logout).toHaveBeenCalled();
   });
 });

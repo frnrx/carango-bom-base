@@ -14,7 +14,7 @@ const useAuth = () => {
   };
 
   const logout = () => {
-    localStorage.setItem('isLoggedIn', false);
+    localStorage.removeItem('isLoggedIn');
     setIsLoggedIn(false);
 
     logoutService();

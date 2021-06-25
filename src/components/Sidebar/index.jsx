@@ -10,7 +10,7 @@ import { useStyles } from './styles';
 const Sidebar = () => {
   const classes = useStyles();
 
-  const { isLoggedIn, logout } = useContext(Authentication);
+  const { logout } = useContext(Authentication);
 
   const menuItems = [
     {
@@ -21,13 +21,13 @@ const Sidebar = () => {
     },
     {
       id: '2',
-      path: '/veiculos',
+      path: '/',
       text: 'Veículos',
       shouldBeLoggedIn: false,
     },
     {
       id: '3',
-      path: '/',
+      path: '/marcas',
       text: 'Marcas',
       shouldBeLoggedIn: true,
     },
@@ -39,7 +39,7 @@ const Sidebar = () => {
     },
     {
       id: '5',
-      path: '/dahsboard',
+      path: '/dashboard',
       text: 'Dashboard',
       shouldBeLoggedIn: true,
     },
@@ -52,11 +52,10 @@ const Sidebar = () => {
           <ListItem
             // eslint-disable-next-line react/jsx-props-no-spreading
             {...props}
-            isLoggedIn={isLoggedIn}
           />
         </Link>
       ))}
-      <ListItem isLoggedIn={isLoggedIn} action={logout} shouldBeLoggedIn text="Sair" />
+      <ListItem action={logout} shouldBeLoggedIn text="Sair" />
     </Grid>
   );
 };

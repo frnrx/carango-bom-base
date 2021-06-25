@@ -9,18 +9,27 @@ import CustomRoute from './CustomRoute';
 
 const Routes = () => (
   <Switch>
-    <CustomRoute path="/cadastro-marca" isPrivate>
+    <CustomRoute exact path="/cadastro-marca" isPrivate>
       <BrandRegistry />
     </CustomRoute>
-    <CustomRoute path="/alteracao-marca/:id" isPrivate>
+    <CustomRoute exact path="/alteracao-marca/:id" isPrivate>
       <BrandRegistry />
+    </CustomRoute>
+    <CustomRoute exact path="/marcas" isPrivate>
+      <BrandsList />
+    </CustomRoute>
+    <CustomRoute exact path="/usuarios" isPrivate>
+      <div>usuários</div>
+    </CustomRoute>
+    <CustomRoute exact path="/dashboard" isPrivate>
+      <div>dashboard</div>
     </CustomRoute>
 
-    <CustomRoute path="/login">
+    <CustomRoute exact path="/login">
       <Login />
     </CustomRoute>
     <CustomRoute path="/">
-      <BrandsList />
+      <div>veículos</div>
     </CustomRoute>
   </Switch>
 );

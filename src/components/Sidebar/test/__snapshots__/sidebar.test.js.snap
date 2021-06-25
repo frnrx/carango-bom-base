@@ -10,10 +10,11 @@ exports[`Sidebar component should match the snapshot when the user is logged in 
   />
   <a
     class="makeStyles-link-2"
-    href="/veiculos"
+    href="/"
   >
     <div
       class="MuiListItemText-root makeStyles-listItems-3"
+      style="background-color: rgb(51, 51, 51); color: white;"
     >
       <span
         class="MuiTypography-root MuiListItemText-primary MuiTypography-body1 MuiTypography-displayBlock"
@@ -24,11 +25,10 @@ exports[`Sidebar component should match the snapshot when the user is logged in 
   </a>
   <a
     class="makeStyles-link-2"
-    href="/"
+    href="/marcas"
   >
     <div
       class="MuiListItemText-root makeStyles-listItems-3"
-      style="background-color: rgb(51, 51, 51); color: white;"
     >
       <span
         class="MuiTypography-root MuiListItemText-primary MuiTypography-body1 MuiTypography-displayBlock"
@@ -53,7 +53,7 @@ exports[`Sidebar component should match the snapshot when the user is logged in 
   </a>
   <a
     class="makeStyles-link-2"
-    href="/dahsboard"
+    href="/dashboard"
   >
     <div
       class="MuiListItemText-root makeStyles-listItems-3"
@@ -97,10 +97,11 @@ exports[`Sidebar component should match the snapshot when the user is logged out
   </a>
   <a
     class="makeStyles-link-5"
-    href="/veiculos"
+    href="/"
   >
     <div
       class="MuiListItemText-root makeStyles-listItems-6"
+      style="background-color: rgb(51, 51, 51); color: white;"
     >
       <span
         class="MuiTypography-root MuiListItemText-primary MuiTypography-body1 MuiTypography-displayBlock"
@@ -111,7 +112,7 @@ exports[`Sidebar component should match the snapshot when the user is logged out
   </a>
   <a
     class="makeStyles-link-5"
-    href="/"
+    href="/marcas"
   />
   <a
     class="makeStyles-link-5"
@@ -119,7 +120,7 @@ exports[`Sidebar component should match the snapshot when the user is logged out
   />
   <a
     class="makeStyles-link-5"
-    href="/dahsboard"
+    href="/dashboard"
   />
 </nav>
 `;
