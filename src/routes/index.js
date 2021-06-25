@@ -15,6 +15,7 @@ const Routes = () => (
     <CustomRoute path="/alteracao-marca/:id" isPrivate>
       <BrandRegistry />
     </CustomRoute>
+
     <CustomRoute path="/login">
       <Login />
     </CustomRoute>
