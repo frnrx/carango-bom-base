@@ -1,14 +1,12 @@
 import React from 'react';
-import { render, screen, fireEvent, } from '@testing-library/react';
+import { render, screen, fireEvent, cleanup } from '@testing-library/react';
 
 import Login from '..';
-import { login } from '../services';
 
 import Authentication from '../../../contexts/authentication';
 
 const mockHistoryPush = jest.fn();
 
-jest.mock('../services');
 jest.mock('react-router-dom', () => ({
   ...jest.requireActual('react-router-dom'),
   useHistory: () => ({
@@ -44,27 +42,44 @@ describe('Login form', () => {
   });
 
   it('should send the data correctly when a user presses submit', () => {
-    fireEvent.change(usernameInput, {
+    cleanup();
+
+    const mockedState = {
+      isLoggedIn: false,
+      login: jest.fn(),
+    };
+
+    const { getByRole, getByLabelText } = render(
+      <Authentication.Provider value={mockedState}>
+        <Login />
+      </Authentication.Provider>,
+    );
+
+    const usernameInputWithContext = getByRole('textbox', { name: /Usuário/i });
+    const passwordInputWithContext = getByLabelText(/Senha/i);
+    const submitButtonWithContext = getByRole('button', { name: /Logar/i });
+
+    fireEvent.change(usernameInputWithContext, {
       target: {
         value: 'johndoe',
       },
     });
 
-    fireEvent.focusOut(usernameInput);
+    fireEvent.focusOut(usernameInputWithContext);
 
-    fireEvent.change(passwordInput, {
+    fireEvent.change(passwordInputWithContext, {
       target: {
         value: '123456',
       },
     });
 
-    fireEvent.focusOut(passwordInput);
+    fireEvent.focusOut(passwordInputWithContext);
 
-    expect(submitButton).not.toBeDisabled();
+    expect(submitButtonWithContext).not.toBeDisabled();
 
-    fireEvent.click(submitButton);
+    fireEvent.click(submitButtonWithContext);
 
-    expect(login).toHaveBeenCalledWith('johndoe', '123456');
+    expect(mockedState.login).toHaveBeenCalledWith('johndoe', '123456');
   });
 
   it('should only enable the submit button when all fields are filled', () => {
@@ -132,7 +147,7 @@ describe('login verification', () => {
     render(
       <Authentication.Provider value={mockedState}>
         <Login />
-      </Authentication.Provider>
+      </Authentication.Provider>,
     );
 
     expect(mockHistoryPush).toHaveBeenCalledWith('/');
@@ -145,7 +160,7 @@ describe('login verification', () => {
     render(
       <Authentication.Provider value={mockedState}>
         <Login />
-      </Authentication.Provider>
+      </Authentication.Provider>,
     );
 
     expect(mockHistoryPush).not.toHaveBeenCalledWith('/');

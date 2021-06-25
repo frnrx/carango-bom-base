@@ -5,7 +5,6 @@ import { TextField, Button, Grid } from '@material-ui/core';
 import useErrors from '../../hooks/useErrors';
 import Authentication from '../../contexts/authentication';
 
-import { login } from './services';
 import { useStyles } from './styles';
 import validations from './validations';
 
@@ -13,14 +12,16 @@ const Login = () => {
   const history = useHistory();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const { isLoggedIn } = useContext(Authentication);
-
+  const { isLoggedIn, login } = useContext(Authentication);
   const classes = useStyles();
+
   const [errors, validateFields, isFormValid] = useErrors(validations);
 
   const onSubmit = (event) => {
     event.preventDefault();
+
     login(username, password);
+    history.push('/');
   };
 
   const handleUpdateUsername = (event) => {
@@ -40,7 +41,7 @@ const Login = () => {
   return (
     <form onSubmit={onSubmit}>
       <Grid container direction="column" spacing={2} alignContent="center">
-        <Grid container item xs={6}>
+        <Grid container item xs={8}>
           <TextField
             fullWidth
             id="username"
@@ -55,7 +56,7 @@ const Login = () => {
             error={errors.username.showError}
           />
         </Grid>
-        <Grid container item xs={6}>
+        <Grid container item xs={8}>
           <TextField
             fullWidth
             id="password"
@@ -70,7 +71,7 @@ const Login = () => {
             error={errors.password.showError}
           />
         </Grid>
-        <Grid item container justify="space-between" xs={6}>
+        <Grid item container justify="space-between" xs={8}>
           <Grid item className={classes.buttonContainer}>
             <Button
               fullWidth
