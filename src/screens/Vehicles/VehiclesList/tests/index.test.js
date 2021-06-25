@@ -28,6 +28,7 @@ describe('<VehiclesList />', () => {
         expect(screen.getByRole('button', { name: 'Excluir' })).toBeInTheDocument(),
         expect(screen.getByRole('button', { name: 'Alterar' })).toBeInTheDocument(),
         expect(screen.getByRole('button', { name: 'Incluir' })).toBeInTheDocument(),
+        expect(screen.getByText('Lista de veículos')).toBeInTheDocument(),
       );
     });
 

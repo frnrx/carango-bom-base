@@ -2,8 +2,9 @@ import React, { useEffect, useState, useMemo, useContext } from 'react';
 import { Link } from 'react-router-dom';
 
 import { DataGrid } from '@material-ui/data-grid';
-import { Button } from '@material-ui/core';
+import Button from '@material-ui/core/Button';
 import Box from '@material-ui/core/Box';
+import Typography from '@material-ui/core/Typography';
 
 import columns from './columns';
 import VehicleService from '../services';
@@ -40,6 +41,11 @@ const VehiclesList = () => {
 
   return (
     <>
+      <Box mb={4}>
+        <Typography variant="h3" component="h2">
+          Lista de veículos
+        </Typography>
+      </Box>
       <DataGrid
         columns={columns}
         rows={vehicles}
