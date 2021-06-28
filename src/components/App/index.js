@@ -18,7 +18,6 @@ const App = () => {
         <div className={classes.root}>
           <CssBaseline />
           <main className={classes.content}>
-            <div className={classes.toolbar} />
             <Container component="article" maxWidth="md">
               <Layout>
                 <Routes />
