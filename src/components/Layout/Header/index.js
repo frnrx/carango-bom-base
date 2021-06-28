@@ -1,5 +1,5 @@
 import React from 'react';
-import { Grid } from '@material-ui/core';
+import { Grid, Typography } from '@material-ui/core';
 
 import { useStyles } from './styles';
 
@@ -8,7 +8,9 @@ const Header = () => {
 
   return (
     <Grid container item xs={12} justify="center" alignItems="center" className={classes.header}>
-      <span>Carango Bom</span>
+      <Typography variant="h4" component="h1">
+        Carango Bom
+      </Typography>
     </Grid>
   );
 };

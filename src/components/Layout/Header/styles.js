@@ -5,9 +5,6 @@ export const useStyles = makeStyles({
     backgroundColor: '#333333',
     height: '56px',
     color: 'white',
-    fontSize: 28,
-    letterSpacing: 3,
     marginBottom: 30,
-    borderRadius: 4,
   },
 });
