@@ -13,11 +13,11 @@ const ListItemComponent = ({ path, text, action, shouldBeLoggedIn, shouldBeLogge
   const location = useLocation();
   const classes = useStyles();
   const { isLoggedIn } = useContext(Authentication);
-  const shouldRender = (shouldBeLoggedIn && !isLoggedIn) || (shouldBeLoggedOut && isLoggedIn);
+  const shouldNotRender = (shouldBeLoggedIn && !isLoggedIn) || (shouldBeLoggedOut && isLoggedIn);
 
   const isActive = location.pathname === path;
 
-  if (shouldRender) {
+  if (shouldNotRender) {
     return null;
   }
 
