@@ -3,9 +3,8 @@ import React, { useContext } from 'react';
 import { Route, useHistory } from 'react-router-dom';
 
 import Authentication from '../../contexts/authentication';
-import Layout from '../../components/Layout';
 
-const CustomRoute = ({ children, path, isPrivate }) => {
+const AuthenticationRoute = ({ children, path, isPrivate }) => {
   const { isLoggedIn } = useContext(Authentication);
   const history = useHistory();
 
@@ -14,11 +13,7 @@ const CustomRoute = ({ children, path, isPrivate }) => {
     return null;
   }
 
-  return (
-    <Layout>
-      <Route path={path}>{children}</Route>
-    </Layout>
-  );
+  return <Route path={path}>{children}</Route>;
 };
 
-export default CustomRoute;
+export default AuthenticationRoute;

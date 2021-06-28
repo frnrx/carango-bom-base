@@ -5,7 +5,7 @@ import { createMemoryHistory } from 'history';
 
 import Authentication from '../../../contexts/authentication';
 
-import CustomRoute from '..';
+import AuthenticationRoute from '..';
 
 const mockHistoryPush = jest.fn();
 
@@ -16,7 +16,7 @@ jest.mock('react-router-dom', () => ({
   }),
 }));
 
-describe('CustomRoute component', () => {
+describe('AuthenticationRoute component', () => {
   it('should navigate to login if is a private route and the user is not logged in', () => {
     const mockedState = {
       isLoggedIn: false,
@@ -29,15 +29,15 @@ describe('CustomRoute component', () => {
       <Authentication.Provider value={mockedState}>
         <Router history={history}>
           <Switch>
-            <CustomRoute exact path="/login">
+            <AuthenticationRoute exact path="/login">
               <div>login</div>
-            </CustomRoute>
-            <CustomRoute path="/component" isPrivate>
+            </AuthenticationRoute>
+            <AuthenticationRoute path="/component" isPrivate>
               <div>component</div>
-            </CustomRoute>
-            <CustomRoute path="/">
+            </AuthenticationRoute>
+            <AuthenticationRoute path="/">
               <div>home</div>
-            </CustomRoute>
+            </AuthenticationRoute>
           </Switch>
         </Router>
       </Authentication.Provider>,
@@ -60,15 +60,15 @@ describe('CustomRoute component', () => {
       <Authentication.Provider value={mockedState}>
         <Router history={history}>
           <Switch>
-            <CustomRoute exact path="/login">
+            <AuthenticationRoute exact path="/login">
               <div>login</div>
-            </CustomRoute>
-            <CustomRoute exact path="/component" isPrivate>
+            </AuthenticationRoute>
+            <AuthenticationRoute exact path="/component" isPrivate>
               <div>component</div>
-            </CustomRoute>
-            <CustomRoute path="/">
+            </AuthenticationRoute>
+            <AuthenticationRoute path="/">
               <div>home</div>
-            </CustomRoute>
+            </AuthenticationRoute>
           </Switch>
         </Router>
       </Authentication.Provider>,

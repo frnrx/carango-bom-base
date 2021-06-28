@@ -5,32 +5,31 @@ import BrandRegistry from '../screens/Brands/BrandRegistry';
 import BrandsList from '../screens/Brands/BrandsList';
 import Login from '../screens/Login';
 
-import CustomRoute from './CustomRoute';
+import AuthenticationRoute from './AuthenticationRoute';
 
 const Routes = () => (
   <Switch>
-    <CustomRoute exact path="/cadastro-marca" isPrivate>
+    <AuthenticationRoute exact path="/cadastro-marca" isPrivate>
       <BrandRegistry />
-    </CustomRoute>
-    <CustomRoute exact path="/alteracao-marca/:id" isPrivate>
+    </AuthenticationRoute>
+    <AuthenticationRoute exact path="/alteracao-marca/:id" isPrivate>
       <BrandRegistry />
-    </CustomRoute>
-    <CustomRoute exact path="/marcas" isPrivate>
+    </AuthenticationRoute>
+    <AuthenticationRoute exact path="/marcas" isPrivate>
       <BrandsList />
-    </CustomRoute>
-    <CustomRoute exact path="/usuarios" isPrivate>
+    </AuthenticationRoute>
+    <AuthenticationRoute exact path="/usuarios" isPrivate>
       <div>usuários</div>
-    </CustomRoute>
-    <CustomRoute exact path="/dashboard" isPrivate>
+    </AuthenticationRoute>
+    <AuthenticationRoute exact path="/dashboard" isPrivate>
       <div>dashboard</div>
-    </CustomRoute>
-
-    <CustomRoute exact path="/login">
+    </AuthenticationRoute>
+    <AuthenticationRoute exact path="/login">
       <Login />
-    </CustomRoute>
-    <CustomRoute path="/">
+    </AuthenticationRoute>
+    <AuthenticationRoute path="/">
       <div>veículos</div>
-    </CustomRoute>
+    </AuthenticationRoute>
   </Switch>
 );
 

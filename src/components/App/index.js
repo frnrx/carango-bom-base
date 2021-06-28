@@ -5,6 +5,7 @@ import { ThemeProvider } from '@material-ui/core/styles';
 import Routes from '../../routes';
 import useAuth from '../../hooks/useAuth';
 import Authentication from '../../contexts/authentication';
+import Layout from '../Layout';
 import { useStyles, muiTheme } from './styles';
 
 const App = () => {
@@ -19,7 +20,9 @@ const App = () => {
           <main className={classes.content}>
             <div className={classes.toolbar} />
             <Container component="article" maxWidth="md">
-              <Routes />
+              <Layout>
+                <Routes />
+              </Layout>
             </Container>
           </main>
         </div>
