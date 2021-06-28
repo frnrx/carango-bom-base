@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { ListItemText } from '@material-ui/core';
 import { useLocation } from 'react-router-dom';
 
-import Authentication from '../../../contexts/authentication';
+import Authentication from '../../../../contexts/authentication';
 
 import { useStyles } from './styles';
 

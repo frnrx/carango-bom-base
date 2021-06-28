@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { Grid } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 
-import Authentication from '../../contexts/authentication';
+import Authentication from '../../../contexts/authentication';
 
 import ListItem from './ListItem';
 import { useStyles } from './styles';

@@ -5,7 +5,7 @@ import { createMemoryHistory } from 'history';
 
 import Sidebar from '..';
 
-import Authentication from '../../../contexts/authentication';
+import Authentication from '../../../../contexts/authentication';
 
 describe('Sidebar component', () => {
   it('should match the snapshot when the user is logged in', () => {
