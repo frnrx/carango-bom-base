@@ -19,6 +19,7 @@ const VehiclesList = () => {
   const shouldDisableButtons = useMemo(() =>
     selectedVehicle && Object.keys(selectedVehicle).length === 0,
   [selectedVehicle]);
+  const handleOnRowSelected = (selectedRow) => setSelectedVehicle(selectedRow.data);
 
   const loadVehicles = () => {
     VehicleService.getAll()
@@ -50,7 +51,7 @@ const VehiclesList = () => {
         columns={columns}
         rows={vehicles}
         loading={isLoading}
-        onRowSelected={(gridSelection) => setSelectedVehicle(gridSelection.data)}
+        onRowSelected={handleOnRowSelected}
         autoHeight
         disableColumnMenu
         disableColumnSelector
