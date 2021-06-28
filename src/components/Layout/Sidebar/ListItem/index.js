@@ -1,39 +1,47 @@
 import React, { useContext } from 'react';
-import { ListItemText } from '@material-ui/core';
-import { useLocation } from 'react-router-dom';
+import { useLocation, Link } from 'react-router-dom';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
+import ButtonBase from '@material-ui/core/ButtonBase';
+import MuiLink from '@material-ui/core/Link';
 
 import Authentication from '../../../../contexts/authentication';
 
 import { useStyles } from './styles';
 
-const ListItem = ({ path, text, action, shouldBeLoggedIn, shouldBeLoggedOut }) => {
+const ListItemComponent = ({ path, text, action, shouldBeLoggedIn, shouldBeLoggedOut }) => {
   const location = useLocation();
   const classes = useStyles();
-
   const { isLoggedIn } = useContext(Authentication);
-
-  const handleAction = () => {
-    if (action) {
-      action();
-    }
-  };
+  const shouldNotRender = (shouldBeLoggedIn && !isLoggedIn) || (shouldBeLoggedOut && isLoggedIn);
 
   const isActive = location.pathname === path;
 
-  if ((shouldBeLoggedIn && !isLoggedIn) || (shouldBeLoggedOut && isLoggedIn)) {
+  if (shouldNotRender) {
     return null;
   }
 
   return (
-    <ListItemText
+    <ListItem
       className={classes.listItems}
       style={isActive ? { backgroundColor: '#333333', color: 'white' } : {}}
-      onClick={handleAction}
-      onKeyDown={handleAction}
     >
-      {text}
-    </ListItemText>
+      {path &&
+        <MuiLink to={path} component={Link} className={classes.linkWidth}>
+          <ListItemText>
+            {text}
+          </ListItemText>
+        </MuiLink>
+      }
+      {action &&
+        <ButtonBase onClick={action} className={classes.buttonWidth}>
+          <ListItemText>
+            {text}
+          </ListItemText>
+        </ButtonBase>
+      }
+    </ListItem>
   );
 };
 
-export default ListItem;
+export default ListItemComponent;

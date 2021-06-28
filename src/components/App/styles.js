@@ -10,6 +10,18 @@ export const muiTheme = createMuiTheme(
         main: blue[900],
       },
     },
+    props: {
+      MuiLink: {
+        underline: 'none',
+      }
+    },
+    overrides: {
+      MuiLink: {
+        root: {
+          color: 'inherit',
+        }
+      }
+    }
   },
   ptBR,
 );
