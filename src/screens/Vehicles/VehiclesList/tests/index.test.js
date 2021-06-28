@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen, waitFor, fireEvent } from '@testing-library/react';
+import { render, screen, waitFor, cleanup, fireEvent } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 
 import VehiclesList from '..';
@@ -10,21 +10,24 @@ import Authentication from '../../../../contexts/authentication';
 jest.mock('../../services');
 
 describe('<VehiclesList />', () => {
+  afterEach(cleanup);
+  beforeEach(async () => {
+    const mockedState = { isLoggedIn: true };
+    VehicleService.getAll.mockImplementationOnce(() => Promise.resolve(mockedVehicles));
+    VehicleService.delete.mockImplementation(() => {});
+    render(
+      <Authentication.Provider value={mockedState}>
+        <MemoryRouter>
+          <VehiclesList />
+        </MemoryRouter>
+      </Authentication.Provider>,
+    );
+    await waitFor(() => expect(screen.getAllByRole('row')).toHaveLength(6));
+  });
+
   describe('rendering', () => {
     it('should render the VehiclesList component correctly', async () => {
-      const mockedState = {
-        isLoggedIn: true,
-      };
-      VehicleService.getAll.mockImplementationOnce(() => Promise.resolve(mockedVehicles));
-      render(
-        <Authentication.Provider value={mockedState}>
-          <MemoryRouter>
-            <VehiclesList />
-          </MemoryRouter>
-        </Authentication.Provider>,
-      );
       await waitFor(() =>
-        expect(screen.getAllByRole('row')).toHaveLength(6),
         expect(screen.getByRole('button', { name: 'Excluir' })).toBeInTheDocument(),
         expect(screen.getByRole('button', { name: 'Alterar' })).toBeInTheDocument(),
         expect(screen.getByRole('button', { name: 'Incluir' })).toBeInTheDocument(),
@@ -33,9 +36,8 @@ describe('<VehiclesList />', () => {
     });
 
     it('should not render the buttons if the user is not logged in', async () => {
-      const mockedState = {
-        isLoggedIn: false,
-      };
+      cleanup();
+      const mockedState = { isLoggedIn: false };
       VehicleService.getAll.mockImplementationOnce(() => Promise.resolve(mockedVehicles));
       render(
         <Authentication.Provider value={mockedState}>
@@ -55,18 +57,6 @@ describe('<VehiclesList />', () => {
 
   describe('button enabling', () => {
     it('should enable the buttons after a row is clicked', async () => {
-      const mockedState = {
-        isLoggedIn: true,
-      };
-      VehicleService.getAll.mockImplementationOnce(() => Promise.resolve(mockedVehicles));
-      render(
-        <Authentication.Provider value={mockedState}>
-          <MemoryRouter>
-            <VehiclesList />
-          </MemoryRouter>
-        </Authentication.Provider>,
-      );
-
       await waitFor(() =>
         expect(screen.getByRole('button', { name: 'Excluir' })).toBeDisabled(),
         expect(
@@ -88,21 +78,6 @@ describe('<VehiclesList />', () => {
 
   describe('button functioning', () => {
     it('should enable the buttons after a row is clicked', async () => {
-      const mockedState = {
-        isLoggedIn: true,
-      };
-      VehicleService.getAll.mockImplementationOnce(() => Promise.resolve(mockedVehicles));
-      VehicleService.delete.mockImplementation(() => {});
-      render(
-        <Authentication.Provider value={mockedState}>
-          <MemoryRouter>
-            <VehiclesList />
-          </MemoryRouter>
-        </Authentication.Provider>,
-      );
-
-      await waitFor(() => expect(screen.getAllByRole('row')).toHaveLength(6));
-
       const firstVehicleRow = screen.getAllByRole('row')[1];
       const deleteButton = screen.getByRole('button', { name: 'Excluir' });
       fireEvent.click(firstVehicleRow);
