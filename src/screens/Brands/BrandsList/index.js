@@ -20,7 +20,7 @@ const BrandsList = () => {
   };
 
   const change = () => {
-    if (selectedBrand) history.push(`/alteracao-marca/${selectedBrand.id}`);
+    if (selectedBrand && selectedBrand.id) history.push(`/alteracao-marca/${selectedBrand.id}`);
   };
 
   const remove = () => {
