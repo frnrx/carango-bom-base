@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { Grid } from '@material-ui/core';
-import { Link } from 'react-router-dom';
+import List from '@material-ui/core/List';
 
 import Authentication from '../../../contexts/authentication';
 
@@ -43,19 +43,28 @@ const Sidebar = () => {
       text: 'Dashboard',
       shouldBeLoggedIn: true,
     },
+    {
+      id: '6',
+      text: 'Sair',
+      shouldBeLoggedIn: true,
+      action: logout,
+    },
   ];
 
   return (
     <Grid container className={classes.container} component="nav" direction="column">
-      {menuItems.map((props) => (
-        <Link to={props.path} key={`${props.id}`} className={classes.link}>
+      <List>
+        {menuItems.map((item) => (
           <ListItem
-            // eslint-disable-next-line react/jsx-props-no-spreading
-            {...props}
+            key={`${item.id}`}
+            action={item.action}
+            path={item.path}
+            text={item.text}
+            shouldBeLoggedIn={item.shouldBeLoggedIn}
+            shouldBeLoggedOut={item.shouldBeLoggedOut}
           />
-        </Link>
-      ))}
-      <ListItem action={logout} shouldBeLoggedIn text="Sair" />
+        ))}
+      </List>
     </Grid>
   );
 };
