@@ -16,7 +16,6 @@ describe('Header component', () => {
         </Layout>
       </Router>,
     );
-    render();
 
     const headerComponent = screen.getByRole('heading', /Carango Bom/i);
     const navigationComponent = screen.getByRole('navigation');
