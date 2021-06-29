@@ -1,26 +1,30 @@
 import { useState } from 'react';
 
-import { loginService, logoutService } from '../screens/Login/services';
+import { loginService } from '../screens/Login/services';
 
 // this hook should only be used once on the Authentication context creation
 const useAuth = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(localStorage.getItem('isLoggedIn') || false);
+  const [userJWT, setUserJWT] = useState(localStorage.getItem('userJWT') || undefined);
 
-  const login = (username, password) => {
-    localStorage.setItem('isLoggedIn', true);
-    setIsLoggedIn(true);
-
-    loginService(username, password);
+  const login = (email, password) => {
+    loginService(email, password)
+      .then((data) => {
+        localStorage.setItem('isLoggedIn', true);
+        localStorage.setItem('userJWT', data.token);
+        setIsLoggedIn(true);
+        setUserJWT(data.token);
+      });
   };
 
   const logout = () => {
     localStorage.removeItem('isLoggedIn');
+    localStorage.removeItem('userJWT');
     setIsLoggedIn(false);
-
-    logoutService();
+    setUserJWT(undefined);
   };
 
-  return { isLoggedIn, login, logout };
+  return { isLoggedIn, userJWT, login, logout };
 };
 
 export default useAuth;
