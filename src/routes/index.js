@@ -1,24 +1,35 @@
 import React from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { Switch } from 'react-router-dom';
 
 import BrandRegistry from '../screens/Brands/BrandRegistry';
 import BrandsList from '../screens/Brands/BrandsList';
 import Login from '../screens/Login';
 
+import AuthenticationRoute from './AuthenticationRoute';
+
 const Routes = () => (
   <Switch>
-    <Route path="/cadastro-marca">
+    <AuthenticationRoute exact path="/cadastro-marca" isPrivate>
       <BrandRegistry />
-    </Route>
-    <Route path="/alteracao-marca/:id">
+    </AuthenticationRoute>
+    <AuthenticationRoute exact path="/alteracao-marca/:id" isPrivate>
       <BrandRegistry />
-    </Route>
-    <Route path="/login">
-      <Login />
-    </Route>
-    <Route path="/">
+    </AuthenticationRoute>
+    <AuthenticationRoute exact path="/marcas" isPrivate>
       <BrandsList />
-    </Route>
+    </AuthenticationRoute>
+    <AuthenticationRoute exact path="/usuarios" isPrivate>
+      <div>usuários</div>
+    </AuthenticationRoute>
+    <AuthenticationRoute exact path="/dashboard" isPrivate>
+      <div>dashboard</div>
+    </AuthenticationRoute>
+    <AuthenticationRoute exact path="/login">
+      <Login />
+    </AuthenticationRoute>
+    <AuthenticationRoute path="/">
+      <div>veículos</div>
+    </AuthenticationRoute>
   </Switch>
 );
 

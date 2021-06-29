@@ -1,0 +1,136 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Sidebar component should match the snapshot when the user is logged in 1`] = `
+<nav
+  class="MuiGrid-root makeStyles-container-1 MuiGrid-container MuiGrid-direction-xs-column"
+>
+  <ul
+    class="MuiList-root MuiList-padding"
+  >
+    <li
+      class="MuiListItem-root makeStyles-listItems-3 MuiListItem-gutters"
+      style="background-color: rgb(51, 51, 51); color: white;"
+    >
+      <a
+        class="MuiTypography-root MuiLink-root MuiLink-underlineHover makeStyles-linkWidth-4 MuiTypography-colorPrimary"
+        href="/"
+      >
+        <div
+          class="MuiListItemText-root"
+        >
+          <span
+            class="MuiTypography-root MuiListItemText-primary MuiTypography-body1 MuiTypography-displayBlock"
+          >
+            Veículos
+          </span>
+        </div>
+      </a>
+    </li>
+    <li
+      class="MuiListItem-root makeStyles-listItems-3 MuiListItem-gutters"
+    >
+      <a
+        class="MuiTypography-root MuiLink-root MuiLink-underlineHover makeStyles-linkWidth-4 MuiTypography-colorPrimary"
+        href="/marcas"
+      >
+        <div
+          class="MuiListItemText-root"
+        >
+          <span
+            class="MuiTypography-root MuiListItemText-primary MuiTypography-body1 MuiTypography-displayBlock"
+          >
+            Marcas
+          </span>
+        </div>
+      </a>
+    </li>
+    <li
+      class="MuiListItem-root makeStyles-listItems-3 MuiListItem-gutters"
+    >
+      <a
+        class="MuiTypography-root MuiLink-root MuiLink-underlineHover makeStyles-linkWidth-4 MuiTypography-colorPrimary"
+        href="/usuarios"
+      >
+        <div
+          class="MuiListItemText-root"
+        >
+          <span
+            class="MuiTypography-root MuiListItemText-primary MuiTypography-body1 MuiTypography-displayBlock"
+          >
+            Usuários
+          </span>
+        </div>
+      </a>
+    </li>
+    <li
+      class="MuiListItem-root makeStyles-listItems-3 MuiListItem-gutters"
+    >
+      <a
+        class="MuiTypography-root MuiLink-root MuiLink-underlineHover makeStyles-linkWidth-4 MuiTypography-colorPrimary"
+        href="/dashboard"
+      >
+        <div
+          class="MuiListItemText-root"
+        >
+          <span
+            class="MuiTypography-root MuiListItemText-primary MuiTypography-body1 MuiTypography-displayBlock"
+          >
+            Dashboard
+          </span>
+        </div>
+      </a>
+    </li>
+    <li
+      class="MuiListItem-root makeStyles-listItems-3 MuiListItem-gutters"
+    />
+  </ul>
+</nav>
+`;
+
+exports[`Sidebar component should match the snapshot when the user is logged out 1`] = `
+<nav
+  class="MuiGrid-root makeStyles-container-6 MuiGrid-container MuiGrid-direction-xs-column"
+>
+  <ul
+    class="MuiList-root MuiList-padding"
+  >
+    <li
+      class="MuiListItem-root makeStyles-listItems-8 MuiListItem-gutters"
+    >
+      <a
+        class="MuiTypography-root MuiLink-root MuiLink-underlineHover makeStyles-linkWidth-9 MuiTypography-colorPrimary"
+        href="/login"
+      >
+        <div
+          class="MuiListItemText-root"
+        >
+          <span
+            class="MuiTypography-root MuiListItemText-primary MuiTypography-body1 MuiTypography-displayBlock"
+          >
+            Entrar
+          </span>
+        </div>
+      </a>
+    </li>
+    <li
+      class="MuiListItem-root makeStyles-listItems-8 MuiListItem-gutters"
+      style="background-color: rgb(51, 51, 51); color: white;"
+    >
+      <a
+        class="MuiTypography-root MuiLink-root MuiLink-underlineHover makeStyles-linkWidth-9 MuiTypography-colorPrimary"
+        href="/"
+      >
+        <div
+          class="MuiListItemText-root"
+        >
+          <span
+            class="MuiTypography-root MuiListItemText-primary MuiTypography-body1 MuiTypography-displayBlock"
+          >
+            Veículos
+          </span>
+        </div>
+      </a>
+    </li>
+  </ul>
+</nav>
+`;

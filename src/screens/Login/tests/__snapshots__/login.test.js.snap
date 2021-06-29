@@ -6,7 +6,7 @@ exports[`Login screen should match the snapshot 1`] = `
     class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2 MuiGrid-direction-xs-column MuiGrid-align-content-xs-center"
   >
     <div
-      class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-6"
+      class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-8"
     >
       <div
         class="MuiFormControl-root MuiTextField-root MuiFormControl-fullWidth"
@@ -33,10 +33,10 @@ exports[`Login screen should match the snapshot 1`] = `
           />
           <fieldset
             aria-hidden="true"
-            class="PrivateNotchedOutline-root-2 MuiOutlinedInput-notchedOutline"
+            class="PrivateNotchedOutline-root-3 MuiOutlinedInput-notchedOutline"
           >
             <legend
-              class="PrivateNotchedOutline-legendLabelled-4"
+              class="PrivateNotchedOutline-legendLabelled-5"
             >
               <span>
                 Usuário
@@ -48,7 +48,7 @@ exports[`Login screen should match the snapshot 1`] = `
       </div>
     </div>
     <div
-      class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-6"
+      class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-8"
     >
       <div
         class="MuiFormControl-root MuiTextField-root MuiFormControl-fullWidth"
@@ -75,10 +75,10 @@ exports[`Login screen should match the snapshot 1`] = `
           />
           <fieldset
             aria-hidden="true"
-            class="PrivateNotchedOutline-root-2 MuiOutlinedInput-notchedOutline"
+            class="PrivateNotchedOutline-root-3 MuiOutlinedInput-notchedOutline"
           >
             <legend
-              class="PrivateNotchedOutline-legendLabelled-4"
+              class="PrivateNotchedOutline-legendLabelled-5"
             >
               <span>
                 Senha
@@ -90,20 +90,42 @@ exports[`Login screen should match the snapshot 1`] = `
       </div>
     </div>
     <div
-      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6"
+      class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-justify-xs-space-between MuiGrid-grid-xs-8"
     >
-      <button
-        class="MuiButtonBase-root MuiButton-root MuiButton-contained makeStyles-sumbitButton-1 MuiButton-containedPrimary Mui-disabled MuiButton-fullWidth Mui-disabled"
-        disabled=""
-        tabindex="-1"
-        type="submit"
+      <div
+        class="MuiGrid-root makeStyles-buttonContainer-1 MuiGrid-item"
       >
-        <span
-          class="MuiButton-label"
+        <button
+          class="MuiButtonBase-root MuiButton-root MuiButton-contained makeStyles-button-2 MuiButton-fullWidth"
+          tabindex="0"
+          type="button"
         >
-          Logar
-        </span>
-      </button>
+          <span
+            class="MuiButton-label"
+          >
+            Voltar
+          </span>
+          <span
+            class="MuiTouchRipple-root"
+          />
+        </button>
+      </div>
+      <div
+        class="MuiGrid-root makeStyles-buttonContainer-1 MuiGrid-item"
+      >
+        <button
+          class="MuiButtonBase-root MuiButton-root MuiButton-contained makeStyles-button-2 MuiButton-containedPrimary Mui-disabled MuiButton-fullWidth Mui-disabled"
+          disabled=""
+          tabindex="-1"
+          type="submit"
+        >
+          <span
+            class="MuiButton-label"
+          >
+            Logar
+          </span>
+        </button>
+      </div>
     </div>
   </div>
 </form>

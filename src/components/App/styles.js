@@ -10,6 +10,18 @@ export const muiTheme = createMuiTheme(
         main: blue[900],
       },
     },
+    props: {
+      MuiLink: {
+        underline: 'none',
+      }
+    },
+    overrides: {
+      MuiLink: {
+        root: {
+          color: 'inherit',
+        }
+      }
+    }
   },
   ptBR,
 );
@@ -18,8 +30,6 @@ export const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
   },
-  // necessary for content to be below app bar
-  toolbar: theme.mixins.toolbar,
   backdrop: {
     zIndex: theme.zIndex.drawer + 1,
     color: '#fff',
@@ -27,6 +37,5 @@ export const useStyles = makeStyles((theme) => ({
   content: {
     flexGrow: 1,
     backgroundColor: theme.palette.background.default,
-    padding: theme.spacing(3),
   },
 }));
