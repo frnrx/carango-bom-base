@@ -1,9 +1,10 @@
-export const loginService = (username, password) => {
-  // TODO: conect with backend API
-  console.log(`username, password`, username, password);
-};
+import { API_URL } from "../../../services/constants";
+import fetchResponseHandler from "../../../services/fetchResponseHandler";
 
-export const logoutService = (username, password) => {
-  // TODO: conect with backend API
-  console.log(`username, password`, username, password);
+export const loginService = async (email, password) => {
+  const requestOptions = {
+    method: 'POST',
+    body: JSON.stringify({ email, senha: password }),
+  }
+  return fetch(`${API_URL}/auth`, requestOptions).then(fetchResponseHandler);
 };
