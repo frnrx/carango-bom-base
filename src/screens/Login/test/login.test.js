@@ -26,6 +26,7 @@ describe('Login form', () => {
   let usernameInput;
   let passwordInput;
   let submitButton;
+  let goBackButton;
 
   beforeEach(() => {
     render(<Login />);
@@ -33,6 +34,7 @@ describe('Login form', () => {
     usernameInput = screen.getByRole('textbox', { name: /Usuário/i });
     passwordInput = screen.getByLabelText(/Senha/i);
     submitButton = screen.getByRole('button', { name: /Logar/i });
+    goBackButton = screen.getByRole('button', { name: /Voltar/i });
   });
 
   it('should render the login form', () => {
@@ -136,6 +138,12 @@ describe('Login form', () => {
     expect(errorText).toBeInTheDocument();
 
     expect(submitButton).toHaveAttribute('disabled');
+  });
+
+  it('should should go to home if the user presses Voltar', () => {
+    fireEvent.click(goBackButton);
+
+    expect(mockHistoryPush).toHaveBeenCalledWith('/');
   });
 });
 
