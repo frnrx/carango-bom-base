@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom';
 import { TextField, Button, Grid, CircularProgress } from '@material-ui/core';
 
 import useErrors from '../../hooks/useErrors';
-import Authentication from '../../contexts/authentication';
+import { AuthenticationContext } from '../../contexts/authentication';
 
 import { useStyles } from './styles';
 import validations from './validations';
@@ -12,7 +12,7 @@ const Login = () => {
   const history = useHistory();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const { isLoggedIn, login, isLoading } = useContext(Authentication);
+  const { isLoggedIn, login, isLoading } = useContext(AuthenticationContext);
   const classes = useStyles();
 
   const [errors, validateFields, isFormValid] = useErrors(validations);
@@ -21,7 +21,6 @@ const Login = () => {
     event.preventDefault();
 
     login(email, password);
-    history.push('/');
   };
 
   const handleUpdateEmail = (event) => {
@@ -36,7 +35,7 @@ const Login = () => {
     if (isLoggedIn) {
       history.push('/');
     }
-  }, []);
+  }, [isLoggedIn]);
 
   return (
     <form onSubmit={onSubmit}>
