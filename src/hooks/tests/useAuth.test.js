@@ -1,15 +1,26 @@
+import React from 'react';
 import { renderHook, act } from '@testing-library/react-hooks';
 import useAuth from '../useAuth';
 import { loginService } from '../../screens/Login/services';
+import { SnackBarContext } from '../../contexts/snackbar';
 
 jest.mock('../../screens/Login/services');
 
 describe('authentication update', () => {
+  const mockedValue = {
+    addAlert: jest.fn(),
+  };
+  const wrapper = ({ children }) => (
+    <SnackBarContext.Provider value={mockedValue}>
+      {children}
+    </SnackBarContext.Provider>
+  );
+
   it('should handle the loginService correctly when the login function is called', async () => {
     const mockedServiceReturn = { token: 'fake auth token' };
     loginService.mockImplementationOnce(() => Promise.resolve(mockedServiceReturn));
 
-    const { result, waitForNextUpdate } = renderHook(() => useAuth());
+    const { result, waitForNextUpdate } = renderHook(() => useAuth(), { wrapper });
     act(() => {
       result.current.login();
     });
@@ -21,7 +32,7 @@ describe('authentication update', () => {
   });
 
   it('should erase isLoggedIn and userJWT values when the logout function is called', () => {
-    const { result } = renderHook(() => useAuth());
+    const { result } = renderHook(() => useAuth(), { wrapper });
 
     act(() => {
       result.current.logout();
@@ -37,7 +48,7 @@ describe('authentication update', () => {
       const mockedServiceReturn = { token: 'fake auth token' };
       loginService.mockImplementationOnce(() => Promise.resolve(mockedServiceReturn));
 
-      const { result, waitForNextUpdate } = renderHook(() => useAuth());
+      const { result, waitForNextUpdate } = renderHook(() => useAuth(), { wrapper });
       act(() => {
         result.current.login();
       });
@@ -46,4 +57,19 @@ describe('authentication update', () => {
       expect(result.current.isLoading).toBeFalsy();
     }
   );
+
+  it('should call the addAlert function when the login service returns an error', async () => {
+    const mockedServiceReturn = { error: 'error' };
+    loginService.mockImplementationOnce(() => Promise.reject(mockedServiceReturn));
+
+    const { result, waitForNextUpdate } = renderHook(() => useAuth(), { wrapper });
+    act(() => {
+      result.current.login();
+    });
+    await waitForNextUpdate();
+    expect(mockedValue.addAlert).toHaveBeenCalledWith({
+      content: 'E-mail ou senha incorretos',
+      customSeverity: 'error',
+    });
+  });
 });
