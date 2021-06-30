@@ -30,5 +30,20 @@ describe('authentication update', () => {
     expect(localStorage.getItem('isLoggedIn')).toBeNull();
     expect(result.current.userJWT).toBeUndefined();
     expect(localStorage.getItem('userJWT')).toBeNull();
-  })
+  });
+
+  it('should update isLoading to true at the start of the login and to false after that',
+    async () => {
+      const mockedServiceReturn = { token: 'fake auth token' };
+      loginService.mockImplementationOnce(() => Promise.resolve(mockedServiceReturn));
+
+      const { result, waitForNextUpdate } = renderHook(() => useAuth());
+      act(() => {
+        result.current.login();
+      });
+      expect(result.current.isLoading).toBeTruthy();
+      await waitForNextUpdate();
+      expect(result.current.isLoading).toBeFalsy();
+    }
+  );
 });

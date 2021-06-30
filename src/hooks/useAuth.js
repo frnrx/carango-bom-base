@@ -6,14 +6,19 @@ import { loginService } from '../screens/Login/services';
 const useAuth = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(localStorage.getItem('isLoggedIn') || false);
   const [userJWT, setUserJWT] = useState(localStorage.getItem('userJWT') || undefined);
+  const [isLoading, setIsLoading] = useState(false);
 
   const login = (email, password) => {
+    setIsLoading(true);
     loginService(email, password)
       .then((data) => {
         localStorage.setItem('isLoggedIn', true);
         localStorage.setItem('userJWT', data.token);
         setIsLoggedIn(true);
         setUserJWT(data.token);
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
   };
 
@@ -24,7 +29,7 @@ const useAuth = () => {
     setUserJWT(undefined);
   };
 
-  return { isLoggedIn, userJWT, login, logout };
+  return { isLoggedIn, userJWT, login, logout, isLoading };
 };
 
 export default useAuth;
