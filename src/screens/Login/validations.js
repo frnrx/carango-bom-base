@@ -1,9 +1,10 @@
 const validations = {
-  username: (data) => {
-    if (data && data.length >= 4) {
+  email: (data) => {
+    const emailRegex = new RegExp(/\S+@\S+\.\S+/);
+    if (data && emailRegex.test(data)) {
       return { valid: true, showError: false };
     }
-    return { valid: false, text: 'Usuário deve ter ao menos 4 caracteres.', showError: true };
+    return { valid: false, text: 'E-mail inválido.', showError: true };
   },
   password: (data) => {
     if (data && data.length >= 6) {
