@@ -9,10 +9,10 @@ import Typography from '@material-ui/core/Typography';
 import columns from './columns';
 import VehicleService from '../services';
 import vehicleParser from './vehicleParser';
-import Authentication from '../../../contexts/authentication';
+import { AuthenticationContext } from '../../../contexts/authentication';
 
 const VehiclesList = () => {
-  const { isLoggedIn } = useContext(Authentication);
+  const { isLoggedIn } = useContext(AuthenticationContext);
   const [vehicles, setVehicles] = useState([]);
   const [selectedVehicle, setSelectedVehicle] = useState({});
   const [isLoading, setIsLoading] = useState(false);

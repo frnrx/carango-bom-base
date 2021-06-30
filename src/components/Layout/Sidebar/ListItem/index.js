@@ -5,14 +5,14 @@ import ListItemText from '@material-ui/core/ListItemText';
 import ButtonBase from '@material-ui/core/ButtonBase';
 import MuiLink from '@material-ui/core/Link';
 
-import Authentication from '../../../../contexts/authentication';
+import { AuthenticationContext } from '../../../../contexts/authentication';
 
 import { useStyles } from './styles';
 
 const ListItemComponent = ({ path, text, action, shouldBeLoggedIn, shouldBeLoggedOut }) => {
   const location = useLocation();
   const classes = useStyles();
-  const { isLoggedIn } = useContext(Authentication);
+  const { isLoggedIn } = useContext(AuthenticationContext);
   const shouldNotRender = (shouldBeLoggedIn && !isLoggedIn) || (shouldBeLoggedOut && isLoggedIn);
 
   const isActive = location.pathname === path;

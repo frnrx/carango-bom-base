@@ -2,10 +2,10 @@
 import React, { useContext } from 'react';
 import { Route, useHistory } from 'react-router-dom';
 
-import Authentication from '../../contexts/authentication';
+import { AuthenticationContext } from '../../contexts/authentication';
 
 const AuthenticationRoute = ({ children, path, isPrivate }) => {
-  const { isLoggedIn } = useContext(Authentication);
+  const { isLoggedIn } = useContext(AuthenticationContext);
   const history = useHistory();
 
   if (isPrivate && !isLoggedIn) {

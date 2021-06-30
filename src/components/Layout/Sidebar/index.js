@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { Grid } from '@material-ui/core';
 import List from '@material-ui/core/List';
 
-import Authentication from '../../../contexts/authentication';
+import { AuthenticationContext } from '../../../contexts/authentication';
 
 import ListItem from './ListItem';
 import { useStyles } from './styles';
@@ -10,7 +10,7 @@ import { useStyles } from './styles';
 const Sidebar = () => {
   const classes = useStyles();
 
-  const { logout } = useContext(Authentication);
+  const { logout } = useContext(AuthenticationContext);
 
   const menuItems = [
     {

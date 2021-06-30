@@ -3,7 +3,7 @@ import { render } from '@testing-library/react';
 import { Switch, Router } from 'react-router-dom';
 import { createMemoryHistory } from 'history';
 
-import Authentication from '../../../contexts/authentication';
+import { AuthenticationContext } from '../../../contexts/authentication';
 
 import AuthenticationRoute from '..';
 
@@ -26,7 +26,7 @@ describe('AuthenticationRoute component', () => {
     const history = createMemoryHistory();
 
     render(
-      <Authentication.Provider value={mockedState}>
+      <AuthenticationContext.Provider value={mockedState}>
         <Router history={history}>
           <Switch>
             <AuthenticationRoute exact path="/login">
@@ -40,7 +40,7 @@ describe('AuthenticationRoute component', () => {
             </AuthenticationRoute>
           </Switch>
         </Router>
-      </Authentication.Provider>,
+      </AuthenticationContext.Provider>,
     );
 
     history.push('/component');
@@ -57,7 +57,7 @@ describe('AuthenticationRoute component', () => {
     const history = createMemoryHistory();
 
     const { getByText } = render(
-      <Authentication.Provider value={mockedState}>
+      <AuthenticationContext.Provider value={mockedState}>
         <Router history={history}>
           <Switch>
             <AuthenticationRoute exact path="/login">
@@ -71,7 +71,7 @@ describe('AuthenticationRoute component', () => {
             </AuthenticationRoute>
           </Switch>
         </Router>
-      </Authentication.Provider>,
+      </AuthenticationContext.Provider>,
     );
 
     history.push('/component');

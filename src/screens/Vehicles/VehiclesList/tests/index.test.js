@@ -5,7 +5,7 @@ import { MemoryRouter } from 'react-router-dom';
 import VehiclesList from '..';
 import VehicleService from '../../services';
 import mockedVehicles from './mockedVehicles';
-import Authentication from '../../../../contexts/authentication';
+import { AuthenticationContext } from '../../../../contexts/authentication';
 
 jest.mock('../../services');
 
@@ -16,11 +16,11 @@ describe('<VehiclesList />', () => {
     VehicleService.getAll.mockImplementationOnce(() => Promise.resolve(mockedVehicles));
     VehicleService.delete.mockImplementation(() => {});
     render(
-      <Authentication.Provider value={mockedState}>
+      <AuthenticationContext.Provider value={mockedState}>
         <MemoryRouter>
           <VehiclesList />
         </MemoryRouter>
-      </Authentication.Provider>,
+      </AuthenticationContext.Provider>,
     );
     await waitFor(() => expect(screen.getAllByRole('row')).toHaveLength(6));
   });
@@ -40,11 +40,11 @@ describe('<VehiclesList />', () => {
       const mockedState = { isLoggedIn: false };
       VehicleService.getAll.mockImplementationOnce(() => Promise.resolve(mockedVehicles));
       render(
-        <Authentication.Provider value={mockedState}>
+        <AuthenticationContext.Provider value={mockedState}>
           <MemoryRouter>
             <VehiclesList />
           </MemoryRouter>
-        </Authentication.Provider>,
+        </AuthenticationContext.Provider>,
       );
 
       await waitFor(

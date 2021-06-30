@@ -3,7 +3,7 @@ import { render, screen, fireEvent, cleanup } from '@testing-library/react';
 
 import Login from '..';
 
-import Authentication from '../../../contexts/authentication';
+import { AuthenticationContext } from '../../../contexts/authentication';
 
 const mockHistoryPush = jest.fn();
 
@@ -52,9 +52,9 @@ describe('Login form', () => {
     };
 
     const { getByRole, getByLabelText } = render(
-      <Authentication.Provider value={mockedState}>
+      <AuthenticationContext.Provider value={mockedState}>
         <Login />
-      </Authentication.Provider>,
+      </AuthenticationContext.Provider>,
     );
 
     const emailInputWithContext = getByRole('textbox', { name: /E-mail/i });
@@ -153,9 +153,9 @@ describe('login authorization provider usage', () => {
       isLoggedIn: true,
     };
     render(
-      <Authentication.Provider value={mockedState}>
+      <AuthenticationContext.Provider value={mockedState}>
         <Login />
-      </Authentication.Provider>,
+      </AuthenticationContext.Provider>,
     );
 
     expect(mockHistoryPush).toHaveBeenCalledWith('/');
@@ -166,9 +166,9 @@ describe('login authorization provider usage', () => {
       isLoggedIn: false,
     };
     render(
-      <Authentication.Provider value={mockedState}>
+      <AuthenticationContext.Provider value={mockedState}>
         <Login />
-      </Authentication.Provider>,
+      </AuthenticationContext.Provider>,
     );
 
     expect(mockHistoryPush).not.toHaveBeenCalledWith('/');
@@ -180,9 +180,9 @@ describe('login authorization provider usage', () => {
       isLoading: true,
     };
     render(
-      <Authentication.Provider value={mockedState}>
+      <AuthenticationContext.Provider value={mockedState}>
         <Login />
-      </Authentication.Provider>,
+      </AuthenticationContext.Provider>,
     );
 
     expect(screen.getByRole('progressbar')).toBeInTheDocument();
