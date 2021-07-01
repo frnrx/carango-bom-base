@@ -5,6 +5,7 @@ import BrandRegistry from '../screens/Brands/BrandRegistry';
 import BrandsList from '../screens/Brands/BrandsList';
 import Login from '../screens/Login';
 import VehiclesList from '../screens/Vehicles/VehiclesList';
+import UserRegistration from '../screens/UserRegistration';
 
 import AuthenticationRoute from './AuthenticationRoute';
 
@@ -18,6 +19,9 @@ const Routes = () => (
     </AuthenticationRoute>
     <AuthenticationRoute exact path="/marcas" isPrivate>
       <BrandsList />
+    </AuthenticationRoute>
+    <AuthenticationRoute exact path="/cadastro-usuario" isPrivate>
+      <UserRegistration />
     </AuthenticationRoute>
     <AuthenticationRoute exact path="/usuarios" isPrivate>
       <div>usuários</div>
