@@ -86,7 +86,6 @@ const UserRegistration = () => {
               role="textbox"
               onChange={handleUpdatePasswordConfirmation}
               variant="outlined"
-              // value={passwordConfirmation}
               onBlur={() =>
                 validateFields({
                   target: { name: 'passwordConfirmation', value: passwordConfirmation },
