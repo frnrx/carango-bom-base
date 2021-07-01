@@ -20,6 +20,7 @@ describe('Login services', () => {
       `${API_URL}/auth`,
       {
         method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email: mockedEmail, senha: mockedPassword }),
       },
     );
