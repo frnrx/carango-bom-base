@@ -41,7 +41,7 @@ const VehiclesList = () => {
           <Button
             variant="contained"
             color="secondary"
-            onClick={deleteVehicle}
+            onClick={deleteVehicle(selectedVehicle.id)}
             disabled={shouldDisableButtons}
           >
             Excluir
