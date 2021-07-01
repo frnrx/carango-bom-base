@@ -1,10 +1,7 @@
-const VehicleService = {
-  async getAll() {
-    return fetch('https://carango-bom-api.herokuapp.com/veiculos').then((r) => r.json());
-  },
-  delete() {
-    return true;
-  }
-};
+import { API_URL } from "../../../services/constants";
+import fetchResponseHandler from "../../../services/fetchResponseHandler";
 
-export default VehicleService;
+export const getAllVehicles = async () =>
+  fetch(`${API_URL}/veiculo`).then(fetchResponseHandler);
+
+export const removeVehicle = () => true;
