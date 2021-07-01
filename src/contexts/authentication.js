@@ -10,6 +10,7 @@ const AuthenticationProvider = ({ children }) => {
     () => ({
       isLoggedIn: authState.isLoggedIn,
       isLoading: authState.isLoading,
+      userJWT: authState.userJWT,
       login: authState.login,
       logout: authState.logout,
     }),
