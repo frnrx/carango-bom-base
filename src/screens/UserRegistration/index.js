@@ -49,31 +49,31 @@ const UserRegistration = () => {
           <Grid container item xs={8}>
             <TextField
               fullWidth
-              id="email"
+              id="newEmail"
               label="E-mail"
               type="email"
-              name="email"
+              name="newEmail"
               role="textbox"
               onChange={handleUpdateEmail}
               variant="outlined"
               onBlur={validateFields}
-              helperText={errors.email.text}
-              error={errors.email.showError}
+              helperText={errors.newEmail.text}
+              error={errors.newEmail.showError}
             />
           </Grid>
           <Grid container item xs={8}>
             <TextField
               fullWidth
-              id="password"
+              id="newPassword"
               label="Senha"
               type="password"
-              name="password"
+              name="newPassword"
               role="textbox"
               onChange={handleUpdatePassword}
               variant="outlined"
               onBlur={validateFields}
-              helperText={errors.password.text}
-              error={errors.password.showError}
+              helperText={errors.newPassword.text}
+              error={errors.newPassword.showError}
             />
           </Grid>
           <Grid container item xs={8}>

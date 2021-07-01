@@ -1,12 +1,12 @@
 const validations = {
-  email: (data) => {
+  newEmail: (data) => {
     const emailRegex = new RegExp(/\S+@\S+\.\S+/);
     if (data && emailRegex.test(data)) {
       return { valid: true, showError: false };
     }
     return { valid: false, text: 'E-mail inválido.', showError: true };
   },
-  password: (data) => {
+  newPassword: (data) => {
     if (data && data.length >= 6) {
       return { valid: true, showError: false };
     }
