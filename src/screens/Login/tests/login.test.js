@@ -3,7 +3,7 @@ import { render, screen, fireEvent, cleanup } from '@testing-library/react';
 
 import Login from '..';
 
-import Authentication from '../../../contexts/authentication';
+import { AuthenticationContext } from '../../../contexts/authentication';
 
 const mockHistoryPush = jest.fn();
 
@@ -23,7 +23,7 @@ describe('Login screen', () => {
 });
 
 describe('Login form', () => {
-  let usernameInput;
+  let emailInput;
   let passwordInput;
   let submitButton;
   let goBackButton;
@@ -31,14 +31,14 @@ describe('Login form', () => {
   beforeEach(() => {
     render(<Login />);
 
-    usernameInput = screen.getByRole('textbox', { name: /Usuário/i });
+    emailInput = screen.getByRole('textbox', { name: /E-mail/i });
     passwordInput = screen.getByLabelText(/Senha/i);
     submitButton = screen.getByRole('button', { name: /Logar/i });
     goBackButton = screen.getByRole('button', { name: /Voltar/i });
   });
 
   it('should render the login form', () => {
-    expect(usernameInput).toBeInTheDocument();
+    expect(emailInput).toBeInTheDocument();
     expect(passwordInput).toBeInTheDocument();
     expect(submitButton).toBeInTheDocument();
   });
@@ -52,22 +52,22 @@ describe('Login form', () => {
     };
 
     const { getByRole, getByLabelText } = render(
-      <Authentication.Provider value={mockedState}>
+      <AuthenticationContext.Provider value={mockedState}>
         <Login />
-      </Authentication.Provider>,
+      </AuthenticationContext.Provider>,
     );
 
-    const usernameInputWithContext = getByRole('textbox', { name: /Usuário/i });
+    const emailInputWithContext = getByRole('textbox', { name: /E-mail/i });
     const passwordInputWithContext = getByLabelText(/Senha/i);
     const submitButtonWithContext = getByRole('button', { name: /Logar/i });
 
-    fireEvent.change(usernameInputWithContext, {
+    fireEvent.change(emailInputWithContext, {
       target: {
-        value: 'johndoe',
+        value: 'johndoe@doe.com',
       },
     });
 
-    fireEvent.focusOut(usernameInputWithContext);
+    fireEvent.focusOut(emailInputWithContext);
 
     fireEvent.change(passwordInputWithContext, {
       target: {
@@ -81,19 +81,19 @@ describe('Login form', () => {
 
     fireEvent.click(submitButtonWithContext);
 
-    expect(mockedState.login).toHaveBeenCalledWith('johndoe', '123456');
+    expect(mockedState.login).toHaveBeenCalledWith('johndoe@doe.com', '123456');
   });
 
   it('should only enable the submit button when all fields are filled', () => {
     expect(submitButton).toHaveAttribute('disabled');
 
-    fireEvent.change(usernameInput, {
+    fireEvent.change(emailInput, {
       target: {
-        value: 'johndoe',
+        value: 'johndoe@joe.com',
       },
     });
 
-    fireEvent.focusOut(usernameInput);
+    fireEvent.focusOut(emailInput);
 
     expect(submitButton).toHaveAttribute('disabled');
 
@@ -108,16 +108,16 @@ describe('Login form', () => {
     expect(submitButton).not.toBeDisabled();
   });
 
-  it('should keep the button disabled when the username don`t meet the requirements', () => {
-    fireEvent.change(usernameInput, {
+  it('should keep the button disabled when the email don`t meet the requirements', () => {
+    fireEvent.change(emailInput, {
       target: {
         value: 'joe',
       },
     });
 
-    fireEvent.focusOut(usernameInput);
+    fireEvent.focusOut(emailInput);
 
-    const errorText = screen.getByText('Usuário deve ter ao menos 4 caracteres.');
+    const errorText = screen.getByText('E-mail inválido.');
 
     expect(errorText).toBeInTheDocument();
 
@@ -147,15 +147,15 @@ describe('Login form', () => {
   });
 });
 
-describe('login verification', () => {
+describe('login authorization provider usage', () => {
   it('should redirect the user to the home if they are already logged', () => {
     const mockedState = {
       isLoggedIn: true,
     };
     render(
-      <Authentication.Provider value={mockedState}>
+      <AuthenticationContext.Provider value={mockedState}>
         <Login />
-      </Authentication.Provider>,
+      </AuthenticationContext.Provider>,
     );
 
     expect(mockHistoryPush).toHaveBeenCalledWith('/');
@@ -166,11 +166,25 @@ describe('login verification', () => {
       isLoggedIn: false,
     };
     render(
-      <Authentication.Provider value={mockedState}>
+      <AuthenticationContext.Provider value={mockedState}>
         <Login />
-      </Authentication.Provider>,
+      </AuthenticationContext.Provider>,
     );
 
     expect(mockHistoryPush).not.toHaveBeenCalledWith('/');
+  });
+
+  it('should find the loading component if the login is still loading', () => {
+    const mockedState = {
+      isLoggedIn: false,
+      isLoading: true,
+    };
+    render(
+      <AuthenticationContext.Provider value={mockedState}>
+        <Login />
+      </AuthenticationContext.Provider>,
+    );
+
+    expect(screen.getByRole('progressbar')).toBeInTheDocument();
   });
 });

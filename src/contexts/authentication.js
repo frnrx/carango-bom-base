@@ -1,9 +1,26 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 
-const Authentication = React.createContext({
-  isLoggedIn: false,
-  login: () => {},
-  logout: () => {},
-});
+import useAuth from '../hooks/useAuth';
 
-export default Authentication;
+export const AuthenticationContext = React.createContext({});
+
+const AuthenticationProvider = ({ children }) => {
+  const authState = useAuth();
+  const value = useMemo(
+    () => ({
+      isLoggedIn: authState.isLoggedIn,
+      isLoading: authState.isLoading,
+      login: authState.login,
+      logout: authState.logout,
+    }),
+    [authState],
+  );
+
+  return (
+    <AuthenticationContext.Provider value={value}>
+      {children}
+    </AuthenticationContext.Provider>
+  );
+}
+
+export default AuthenticationProvider;

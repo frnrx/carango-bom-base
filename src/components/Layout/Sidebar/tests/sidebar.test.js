@@ -5,7 +5,7 @@ import { createMemoryHistory } from 'history';
 
 import Sidebar from '..';
 
-import Authentication from '../../../../contexts/authentication';
+import { AuthenticationContext } from '../../../../contexts/authentication';
 
 describe('Sidebar component', () => {
   it('should match the snapshot when the user is logged in', () => {
@@ -16,11 +16,11 @@ describe('Sidebar component', () => {
     };
 
     const { container } = render(
-      <Authentication.Provider value={mockedState}>
+      <AuthenticationContext.Provider value={mockedState}>
         <Router history={history}>
           <Sidebar />
         </Router>
-      </Authentication.Provider>,
+      </AuthenticationContext.Provider>,
     );
 
     expect(container.firstChild).toMatchSnapshot();
@@ -34,11 +34,11 @@ describe('Sidebar component', () => {
     };
 
     const { container } = render(
-      <Authentication.Provider value={mockedState}>
+      <AuthenticationContext.Provider value={mockedState}>
         <Router history={history}>
           <Sidebar />
         </Router>
-      </Authentication.Provider>,
+      </AuthenticationContext.Provider>,
     );
     expect(container.firstChild).toMatchSnapshot();
   });
@@ -55,11 +55,11 @@ describe('Sidebar state behavior', () => {
     };
 
     const { getByText } = render(
-      <Authentication.Provider value={mockedState}>
+      <AuthenticationContext.Provider value={mockedState}>
         <Router history={history}>
           <Sidebar />
         </Router>
-      </Authentication.Provider>,
+      </AuthenticationContext.Provider>,
     );
 
     const logoutButton = getByText('Sair');

@@ -15,10 +15,10 @@ exports[`Login screen should match the snapshot 1`] = `
         <label
           class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined"
           data-shrink="false"
-          for="username"
-          id="username-label"
+          for="email"
+          id="email-label"
         >
-          Usuário
+          E-mail
         </label>
         <div
           class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-fullWidth MuiInputBase-formControl"
@@ -26,9 +26,9 @@ exports[`Login screen should match the snapshot 1`] = `
           <input
             aria-invalid="false"
             class="MuiInputBase-input MuiOutlinedInput-input"
-            id="username"
-            name="username"
-            type="text"
+            id="email"
+            name="email"
+            type="email"
             value=""
           />
           <fieldset
@@ -39,7 +39,7 @@ exports[`Login screen should match the snapshot 1`] = `
               class="PrivateNotchedOutline-legendLabelled-5"
             >
               <span>
-                Usuário
+                E-mail
               </span>
             </legend>
           </fieldset>
