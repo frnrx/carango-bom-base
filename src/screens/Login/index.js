@@ -30,7 +30,6 @@ const Login = () => {
   const handleUpdatePassword = (event) => {
     setPassword(event.target.value);
   };
-
   useEffect(() => {
     if (isLoggedIn) {
       history.push('/');
