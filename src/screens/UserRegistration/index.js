@@ -25,7 +25,7 @@ const UserRegistration = () => {
 
     await userRegistrationService(email, password)
       .catch(() => {
-        addAlert({ content: 'Não foi possível criar o usuário', customSeverity: 'error' });
+        addAlert({ content: 'Não foi possível criar o usuário.', customSeverity: 'error' });
       })
       .finally(() => {
         setIsLoading(false);
