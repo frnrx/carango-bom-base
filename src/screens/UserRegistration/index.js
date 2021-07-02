@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { TextField, Button, Grid, CircularProgress, Typography } from '@material-ui/core';
 
 import useErrors from '../../hooks/useErrors';
@@ -15,6 +15,7 @@ const UserRegistration = () => {
   const [isLoading, setIsLoading] = useState(false);
   const classes = useStyles();
   const { addAlert } = useContext(SnackBarContext);
+  const history = useHistory();
 
   const [errors, validateFields, isFormValid] = useErrors(validations);
 
@@ -28,6 +29,7 @@ const UserRegistration = () => {
       })
       .finally(() => {
         setIsLoading(false);
+        history.push('/usuarios');
       });
 
     setIsLoading(false);
