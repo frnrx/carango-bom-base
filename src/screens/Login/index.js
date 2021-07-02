@@ -1,11 +1,12 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
-import { TextField, Button, Grid, CircularProgress } from '@material-ui/core';
+import { TextField, Grid, CircularProgress } from '@material-ui/core';
 
 import useErrors from '../../hooks/useErrors';
 import { AuthenticationContext } from '../../contexts/authentication';
 
-import { useStyles } from './styles';
+import FormButton from '../../components/FormButton';
+
 import validations from './validations';
 
 const Login = () => {
@@ -13,7 +14,6 @@ const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const { isLoggedIn, login, isLoading } = useContext(AuthenticationContext);
-  const classes = useStyles();
 
   const [errors, validateFields, isFormValid] = useErrors(validations);
 
@@ -70,28 +70,16 @@ const Login = () => {
           />
         </Grid>
         <Grid item container justify="space-between" xs={8}>
-          <Grid item className={classes.buttonContainer}>
-            <Button
-              fullWidth
-              variant="contained"
-              className={classes.button}
-              onClick={() => history.push('/')}
-            >
-              Voltar
-            </Button>
-          </Grid>
-          <Grid item className={classes.buttonContainer}>
-            <Button
-              fullWidth
-              type="submit"
-              variant="contained"
-              color="primary"
-              disabled={!isFormValid()}
-              className={classes.button}
-            >
-              {isLoading ? <CircularProgress /> : 'Logar'}
-            </Button>
-          </Grid>
+          <FormButton to="/" isLink>
+            Voltar
+          </FormButton>
+          <FormButton
+            color="primary"
+            type="submit"
+            disabled={!isFormValid()}
+          >
+            {isLoading ? <CircularProgress /> : 'Logar'}
+          </FormButton>
         </Grid>
       </Grid>
     </form>

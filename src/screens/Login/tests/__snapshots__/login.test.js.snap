@@ -33,10 +33,10 @@ exports[`Login screen should match the snapshot 1`] = `
           />
           <fieldset
             aria-hidden="true"
-            class="PrivateNotchedOutline-root-3 MuiOutlinedInput-notchedOutline"
+            class="PrivateNotchedOutline-root-1 MuiOutlinedInput-notchedOutline"
           >
             <legend
-              class="PrivateNotchedOutline-legendLabelled-5"
+              class="PrivateNotchedOutline-legendLabelled-3"
             >
               <span>
                 E-mail
@@ -75,10 +75,10 @@ exports[`Login screen should match the snapshot 1`] = `
           />
           <fieldset
             aria-hidden="true"
-            class="PrivateNotchedOutline-root-3 MuiOutlinedInput-notchedOutline"
+            class="PrivateNotchedOutline-root-1 MuiOutlinedInput-notchedOutline"
           >
             <legend
-              class="PrivateNotchedOutline-legendLabelled-5"
+              class="PrivateNotchedOutline-legendLabelled-3"
             >
               <span>
                 Senha
@@ -93,12 +93,14 @@ exports[`Login screen should match the snapshot 1`] = `
       class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-justify-xs-space-between MuiGrid-grid-xs-8"
     >
       <div
-        class="MuiGrid-root makeStyles-buttonContainer-1 MuiGrid-item"
+        class="MuiGrid-root makeStyles-buttonContainer-5 MuiGrid-item"
       >
-        <button
-          class="MuiButtonBase-root MuiButton-root MuiButton-contained makeStyles-button-2 MuiButton-fullWidth"
+        <a
+          aria-disabled="false"
+          class="MuiButtonBase-root MuiButton-root MuiButton-contained makeStyles-button-6 MuiButton-fullWidth"
+          href="/"
+          role="link"
           tabindex="0"
-          type="button"
         >
           <span
             class="MuiButton-label"
@@ -108,14 +110,15 @@ exports[`Login screen should match the snapshot 1`] = `
           <span
             class="MuiTouchRipple-root"
           />
-        </button>
+        </a>
       </div>
       <div
-        class="MuiGrid-root makeStyles-buttonContainer-1 MuiGrid-item"
+        class="MuiGrid-root makeStyles-buttonContainer-5 MuiGrid-item"
       >
         <button
-          class="MuiButtonBase-root MuiButton-root MuiButton-contained makeStyles-button-2 MuiButton-containedPrimary Mui-disabled MuiButton-fullWidth Mui-disabled"
+          class="MuiButtonBase-root MuiButton-root MuiButton-contained makeStyles-button-6 MuiButton-containedPrimary Mui-disabled MuiButton-fullWidth Mui-disabled"
           disabled=""
+          role="button"
           tabindex="-1"
           type="submit"
         >
