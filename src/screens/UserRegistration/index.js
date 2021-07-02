@@ -12,7 +12,6 @@ const UserRegistration = () => {
   const history = useHistory();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [passwordConfirmation, setPasswordConfirmation] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const classes = useStyles();
 
@@ -35,9 +34,10 @@ const UserRegistration = () => {
     setPassword(event.target.value);
   };
 
-  const handleUpdatePasswordConfirmation = (event) => {
-    setPasswordConfirmation(event.target.value === password);
-  };
+  const handleValidatePasswordConfirmation = (event) =>
+    validateFields({
+      target: { name: 'passwordConfirmation', value: event.target.value === password },
+    });
 
   return (
     <Grid container align="center" direction="column">
@@ -84,13 +84,8 @@ const UserRegistration = () => {
               type="password"
               name="passwordConfirmation"
               role="textbox"
-              onChange={handleUpdatePasswordConfirmation}
               variant="outlined"
-              onBlur={() =>
-                validateFields({
-                  target: { name: 'passwordConfirmation', value: passwordConfirmation },
-                })
-              }
+              onBlur={handleValidatePasswordConfirmation}
               helperText={errors.passwordConfirmation.text}
               error={errors.passwordConfirmation.showError}
             />
