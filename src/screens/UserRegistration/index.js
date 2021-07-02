@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useHistory, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { TextField, Button, Grid, CircularProgress, Typography } from '@material-ui/core';
 
 import useErrors from '../../hooks/useErrors';
@@ -9,7 +9,6 @@ import { useStyles } from './styles';
 import validations from './validations';
 
 const UserRegistration = () => {
-  const history = useHistory();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -98,7 +97,6 @@ const UserRegistration = () => {
                 fullWidth
                 variant="contained"
                 className={classes.button}
-                onClick={() => history.push('/usuarios')}
               >
                 Cancelar
               </Button>
