@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { TextField, Button, Grid, CircularProgress, Typography } from '@material-ui/core';
 
 import useErrors from '../../hooks/useErrors';
+import { SnackBarContext } from '../../contexts/snackbar';
 
 import { userRegistrationService } from './services';
 import { useStyles } from './styles';
@@ -13,6 +14,7 @@ const UserRegistration = () => {
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const classes = useStyles();
+  const { addAlert } = useContext(SnackBarContext);
 
   const [errors, validateFields, isFormValid] = useErrors(validations);
 
@@ -20,7 +22,13 @@ const UserRegistration = () => {
     event.preventDefault();
     setIsLoading(true);
 
-    await userRegistrationService(email, password);
+    await userRegistrationService(email, password)
+      .catch(() => {
+        addAlert({ content: 'Não foi possível criar o usuário', customSeverity: 'error' });
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
 
     setIsLoading(false);
   };
