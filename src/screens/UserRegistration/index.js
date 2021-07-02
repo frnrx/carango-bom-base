@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useHistory, Link } from 'react-router-dom';
 import { TextField, Button, Grid, CircularProgress, Typography } from '@material-ui/core';
 
 import useErrors from '../../hooks/useErrors';
@@ -41,7 +41,7 @@ const UserRegistration = () => {
 
   return (
     <Grid container align="center" direction="column">
-      <Typography align="center" variant="h5" gutterBottom>
+      <Typography align="center" variant="h5" gutterBottom component="h2">
         Cadastro de usuário
       </Typography>
       <form onSubmit={onSubmit}>
@@ -98,6 +98,8 @@ const UserRegistration = () => {
           <Grid item container justify="space-between" xs={8}>
             <Grid item className={classes.buttonContainer}>
               <Button
+                to="/usuarios"
+                component={Link}
                 fullWidth
                 variant="contained"
                 className={classes.button}
