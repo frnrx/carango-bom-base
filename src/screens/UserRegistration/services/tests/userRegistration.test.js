@@ -4,7 +4,7 @@ import { API_URL } from '../../../../services/constants';
 
 beforeAll(() => jest.spyOn(window, 'fetch'));
 
-describe('Login services', () => {
+describe('User registration services', () => {
   beforeEach(() => {
     window.fetch.mockResolvedValueOnce({
       ok: true,
