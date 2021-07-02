@@ -1,21 +1,21 @@
 import React from 'react';
 import { Router } from 'react-router-dom';
-import { render, screen, fireEvent, act, waitFor } from '@testing-library/react';
+import { render, screen, fireEvent, act, waitFor, cleanup } from '@testing-library/react';
 import { createMemoryHistory } from 'history';
 
 import UserRegistration from '..';
 import { userRegistrationService } from '../services';
 
-const mockHistoryPush = jest.fn();
+// const mockHistoryPush = jest.fn();
 
 jest.mock('../services');
 
-jest.mock('react-router-dom', () => ({
-  ...jest.requireActual('react-router-dom'),
-  useHistory: () => ({
-    push: mockHistoryPush,
-  }),
-}));
+// jest.mock('react-router-dom', () => ({
+//   ...jest.requireActual('react-router-dom'),
+//   useHistory: () => ({
+//     push: mockHistoryPush,
+//   }),
+// }));
 
 describe('UserRegistration component', () => {
   let header;
@@ -186,8 +186,19 @@ describe('UserRegistration component', () => {
   });
 
   it('should should go to home if the user presses Voltar', () => {
+    cleanup();
+    const history = createMemoryHistory();
+
+    render(
+      <Router history={history}>
+        <UserRegistration />
+      </Router>,
+    );
+
+    cancelButton = screen.getByRole('button', { name: /Cancelar/i });
+
     fireEvent.click(cancelButton);
 
-    expect(mockHistoryPush).toHaveBeenCalledWith('/usuarios');
+    expect(history.location.pathname).toBe('/usuarios');
   });
 });

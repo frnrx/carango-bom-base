@@ -11,6 +11,7 @@ describe('User registration services', () => {
       json: async () => ({ success: true }),
     });
   });
+
   it('should call the fetch function with the correct url', async () => {
     const mockedEmail = 'a@a.com';
     const mockedPassword = '12345678';
