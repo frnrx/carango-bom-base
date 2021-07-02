@@ -109,7 +109,7 @@ describe('Create/update vehicle form', () => {
       modelInput = getByRole('textbox', { name: 'Modelo' });
       yearInput = getByRole('spinbutton', { name: 'Ano' });
       valueInput = getByRole('spinbutton', { name: 'Preço' });
-      const registryButton = getByRole('button', { name: "Cadastrar" });
+      const registryButton = getByRole('button', { name: 'Cadastrar' });
   
       const allButtons = getAllByRole('button');
       const brandButton = allButtons[0];
@@ -143,69 +143,58 @@ describe('Create/update vehicle form', () => {
         expectedForm.value,
       );
     });
+
+    it('should disable the registry button and render error when the modelInput is invalid', () => {
+      fireEvent.change(modelInput, { target: { value: 'Fak' } });
+      fireEvent.focusOut(modelInput);
+  
+      fireEvent.change(yearInput, { target: { value: '2000' } });
+      fireEvent.focusOut(yearInput);
+
+      fireEvent.change(valueInput, { target: { value: '100000' } });
+      fireEvent.focusOut(valueInput);
+  
+      const registryButton = screen.getByRole('button', { name: 'Cadastrar' });
+      const errorText = screen.getByText('Nome de modelo deve ter mais que 3 caracteres.');
+      
+      expect(registryButton).toBeDisabled();
+      expect(errorText).toBeInTheDocument();
+    });
+
+    it('should disable the registry button and render error when the year is invalid', () => {
+      fireEvent.change(modelInput, { target: { value: 'Fake car mock' } });
+      fireEvent.focusOut(modelInput);
+  
+      fireEvent.change(yearInput, { target: { value: '2222' } });
+      fireEvent.focusOut(yearInput);
+
+      fireEvent.change(valueInput, { target: { value: '100000' } });
+      fireEvent.focusOut(valueInput);
+  
+      const registryButton = screen.getByRole('button', { name: 'Cadastrar' });
+      const errorText = screen.getByText('Ano deve ser válido.');
+      
+      expect(registryButton).toBeDisabled();
+      expect(errorText).toBeInTheDocument();
+    });
+
+    it('should disable the registry button and render error when the value is invalid', () => {
+      fireEvent.change(modelInput, { target: { value: 'Fake car mock' } });
+      fireEvent.focusOut(modelInput);
+  
+      fireEvent.change(yearInput, { target: { value: '2012' } });
+      fireEvent.focusOut(yearInput);
+
+      fireEvent.change(valueInput, { target: { value: '4' } });
+      fireEvent.focusOut(valueInput);
+  
+      const registryButton = screen.getByRole('button', { name: 'Cadastrar' });
+      const errorText = screen.getByText('Valor deve ser maior que R$ 5000.');
+      
+      expect(registryButton).toBeDisabled();
+      expect(errorText).toBeInTheDocument();
+    });
   });
-
-  // it('should only enable the submit button when all fields are filled', () => {
-  //   expect(submitButton).toHaveAttribute('disabled');
-
-  //   fireEvent.change(emailInput, {
-  //     target: {
-  //       value: 'johndoe@joe.com',
-  //     },
-  //   });
-
-  //   fireEvent.focusOut(emailInput);
-
-  //   expect(submitButton).toHaveAttribute('disabled');
-
-  //   fireEvent.change(passwordInput, {
-  //     target: {
-  //       value: '123456789',
-  //     },
-  //   });
-
-  //   fireEvent.focusOut(passwordInput);
-
-  //   expect(submitButton).not.toBeDisabled();
-  // });
-
-  // it('should keep the button disabled when the email don`t meet the requirements', () => {
-  //   fireEvent.change(emailInput, {
-  //     target: {
-  //       value: 'joe',
-  //     },
-  //   });
-
-  //   fireEvent.focusOut(emailInput);
-
-  //   const errorText = screen.getByText('E-mail inválido.');
-
-  //   expect(errorText).toBeInTheDocument();
-
-  //   expect(submitButton).toHaveAttribute('disabled');
-  // });
-
-  // it('should keep the button disabled when the password don`t meet the requirements', () => {
-  //   fireEvent.change(passwordInput, {
-  //     target: {
-  //       value: '123',
-  //     },
-  //   });
-
-  //   fireEvent.focusOut(passwordInput);
-
-  //   const errorText = screen.getByText('Senha deve ter ao menos 6 caracteres.');
-
-  //   expect(errorText).toBeInTheDocument();
-
-  //   expect(submitButton).toHaveAttribute('disabled');
-  // });
-
-  // it('should should go to home if the user presses Voltar', () => {
-  //   fireEvent.click(goBackButton);
-
-  //   expect(mockHistoryPush).toHaveBeenCalledWith('/');
-  // });
 });
 
 describe('authorization provider usage', () => {

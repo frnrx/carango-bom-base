@@ -14,9 +14,11 @@ import Typography from '@material-ui/core/Typography';
 
 import { AuthenticationContext } from '../../../contexts/authentication';
 import FormButton from '../../../components/FormButton';
+import useErrors from '../../../hooks/useErrors';
 
 import useBrands from './hooks/useBrands';
 import useVehicleRegistry from './hooks/useVehicleRegistry';
+import validations from './validations';
 
 const VehicleRegistry = () => {
   const { isLoggedIn } = useContext(AuthenticationContext);
@@ -28,6 +30,7 @@ const VehicleRegistry = () => {
   const [model, setModel] = React.useState('');
   const [year, setYear] = React.useState();
   const [value, setValue] = React.useState();
+  const [errors, validateFields, isFormValid] = useErrors(validations);
 
   const isRegistryMode = pathname.includes('/cadastro-veiculo');
   const isUpdateMode = pathname.includes('/alteracao-veiculo');
@@ -65,7 +68,6 @@ const VehicleRegistry = () => {
               value={brand}
               onChange={handleBrandChange}
               variant="outlined"
-              data-testid="select-brand"
               select
               fullWidth
               required
@@ -86,6 +88,9 @@ const VehicleRegistry = () => {
               role="textbox"
               variant="outlined"
               onChange={handleModelChange}
+              onBlur={validateFields}
+              helperText={errors.model.text}
+              error={errors.model.showError}
               fullWidth
               required
             />
@@ -98,24 +103,31 @@ const VehicleRegistry = () => {
               name="year"
               variant="outlined"
               onChange={handleYearChange}
+              onBlur={validateFields}
+              helperText={errors.year.text}
+              error={errors.year.showError}
               fullWidth
               required
             />
           </Grid>
           <Grid container item xs={8}>
             <FormControl fullWidth variant="outlined">
-              <InputLabel htmlFor="value">Preço</InputLabel>
+              <InputLabel error={errors.value.showError} htmlFor="value">Preço</InputLabel>
               <OutlinedInput
                 id="value"
+                name="value"
                 type="number"
-                value={9000}
                 startAdornment={<InputAdornment position="start">R$</InputAdornment>}
                 labelWidth={42}
                 aria-describedby="value-helper-text"
+                onBlur={validateFields}
                 onChange={handleValueChange}
+                error={errors.value.showError}
                 required
               />
-              <FormHelperText id="value-helper-text">Some important helper text</FormHelperText>
+              {errors.value.showError &&
+                <FormHelperText id="value-helper-text" error>{errors.value.text}</FormHelperText>
+              }
             </FormControl>
           </Grid>
           <Grid item container justify="space-between" xs={8}>
@@ -126,6 +138,7 @@ const VehicleRegistry = () => {
               <FormButton
                 color="primary"
                 type="submit"
+                disabled={!isFormValid()}
               >
                 Cadastrar
               </FormButton>
