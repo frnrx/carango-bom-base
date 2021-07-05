@@ -11,7 +11,8 @@ import {
   FormHelperText,
   MenuItem,
   Box,
-  Typography
+  Typography,
+  CircularProgress,
 } from '@material-ui/core';
 
 import FormButton from '../../../components/FormButton';
@@ -19,13 +20,15 @@ import useErrors from '../../../hooks/useErrors';
 
 import useBrands from './hooks/useBrands';
 import useVehicleRegistry from './hooks/useVehicleRegistry';
+import useVehicleUpdate from './hooks/useVehicleUpdate';
 import validations from './validations';
 
 const VehicleRegistry = () => {
   const { brands } = useBrands();
   const { pathname } = useLocation();
   const { vehicleId } = useParams();
-  const { registerVehicle, updateVehicle } = useVehicleRegistry();
+  const { register: registerVehicle, isLoading: isRegisterLoading } = useVehicleRegistry();
+  const { update: updateVehicle } = useVehicleUpdate();
   const [brand, setBrand] = React.useState({});
   const [model, setModel] = React.useState('');
   const [year, setYear] = React.useState();
@@ -138,7 +141,7 @@ const VehicleRegistry = () => {
                 type="submit"
                 disabled={!isFormValid()}
               >
-                Cadastrar
+                {isRegisterLoading ? <CircularProgress /> : 'Cadastrar'}
               </FormButton>
             }
             {isUpdateMode &&
