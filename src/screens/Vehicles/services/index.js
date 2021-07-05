@@ -12,3 +12,25 @@ export const removeVehicle = async (vehicleId, userJWT) => {
 
   return fetch(`${API_URL}/veiculo/${vehicleId}`, requestOptions).then(fetchResponseHandler);
 };
+
+export const registerVehicle = (userJWT, brand, model, year, value) => {
+  const requestBody = {
+    marca: {
+      id: brand.id,
+      nome: brand.name,
+    },
+    modelo: model,
+    ano: year,
+    preco: value,
+  };
+  const requestOptions = {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      ...buildAuthHeader(userJWT),
+    },
+    body: JSON.stringify(requestBody),
+  };
+
+  return fetch(`${API_URL}/veiculo`, requestOptions).then(fetchResponseHandler);
+};
