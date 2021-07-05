@@ -4,25 +4,23 @@ import { TextField, Button, Grid, CircularProgress, Typography } from '@material
 
 import useErrors from '../../hooks/useErrors';
 
-import { userRegistrationService } from './services';
 import { useStyles } from './styles';
 import validations from './validations';
+import useUserRegistration from './hooks/useUserRegistration';
 
 const UserRegistration = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
   const classes = useStyles();
+
+  const { isLoading, register } = useUserRegistration();
 
   const [errors, validateFields, isFormValid] = useErrors(validations);
 
-  const onSubmit = async (event) => {
+  const onSubmit = (event) => {
     event.preventDefault();
-    setIsLoading(true);
 
-    await userRegistrationService(email, password);
-
-    setIsLoading(false);
+    register(email, password);
   };
 
   const handleUpdateEmail = (event) => {
