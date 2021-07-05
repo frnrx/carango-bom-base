@@ -49,8 +49,8 @@ const VehicleRegistry = () => {
 
   return (
     <>
-      <Box mb={4}>
-        <Typography variant="h3" component="h2">
+      <Box mb={4} textAlign="center">
+        <Typography variant="h4" component="h2">
           {isRegistryMode && 'Cadastro de veículos'}
           {isUpdateMode && 'Alteração de veículos'}
         </Typography>
