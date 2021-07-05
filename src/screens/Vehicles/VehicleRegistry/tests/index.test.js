@@ -14,6 +14,7 @@ jest.mock('../hooks/useBrands');
 jest.mock('../hooks/useVehicleRegistry');
 
 const mockHistoryPush = jest.fn();
+const mockedVehicleId = 123;
 let mockedLocationPathname = '/cadastro-veiculo';
 
 jest.mock('react-router-dom', () => ({
@@ -23,7 +24,10 @@ jest.mock('react-router-dom', () => ({
   }),
   useLocation: () => ({
     pathname: mockedLocationPathname,
-  })
+  }),
+  useParams: () => ({
+    vehicleId: mockedVehicleId,
+  }),
 }));
 
 describe('Create/update vehicle form', () => {
@@ -34,7 +38,7 @@ describe('Create/update vehicle form', () => {
 
   beforeEach(() => {
     useBrands.mockReturnValue({ brands: brandsParser(mockedBrands) });
-    useVehicleRegistry.mockReturnValue({ registerVehicle: jest.fn() });
+    useVehicleRegistry.mockReturnValue({ registerVehicle: jest.fn(), updateVehicle: jest.fn() });
     const mockedState = { isLoggedIn: true };
     render(
       <MemoryRouter>
@@ -92,12 +96,72 @@ describe('Create/update vehicle form', () => {
   });
 
   describe('form functioning', () => {
-    it('should send the data correctly when a user presses submit', () => {
+    it('should send the data correctly to the update service when a user presses submit', () => {
+      cleanup();
+      const mockedUpdateService = jest.fn();
+      mockedLocationPathname = `/alteracao-veiculo/${mockedVehicleId}`;
+      useBrands.mockReturnValue({ brands: brandsParser(mockedBrands) });
+      useVehicleRegistry.mockReturnValue({
+        registerVehicle: jest.fn(),
+        updateVehicle: mockedUpdateService,
+      });
+      const mockedState = { isLoggedIn: true };
+      const { getByRole, getAllByRole } = render(
+        <MemoryRouter>
+          <AuthenticationContext.Provider value={mockedState}>
+            <VehicleRegistry />
+          </AuthenticationContext.Provider>
+        </MemoryRouter>,
+      );
+      modelInput = getByRole('textbox', { name: 'Modelo' });
+      yearInput = getByRole('spinbutton', { name: 'Ano' });
+      valueInput = getByRole('spinbutton', { name: 'Preço' });
+      const updateButton = getByRole('button', { name: 'Alterar' });
+  
+      const allButtons = getAllByRole('button');
+      const brandButton = allButtons[0];
+      fireEvent.mouseDown(brandButton);
+      const options = getAllByRole('option');
+      fireEvent.mouseDown(options[1]);
+      options[1].click();
+  
+      fireEvent.change(modelInput, { target: { value: 'Fake car mock' } });
+      fireEvent.focusOut(modelInput);
+  
+      fireEvent.change(yearInput, { target: { value: '2000' } });
+      fireEvent.focusOut(yearInput);
+
+      fireEvent.change(valueInput, { target: { value: '100000' } });
+      fireEvent.focusOut(valueInput);
+
+      const expectedForm = {
+        vehicleId: mockedVehicleId,
+        brand: { id: 32, nome: 'FIAT' },
+        model: 'Fake car mock',
+        year: '2000',
+        value: '100000',
+      };
+
+      fireEvent.click(updateButton);
+  
+      expect(mockedUpdateService).toHaveBeenCalledWith(
+        expectedForm.vehicleId,
+        expectedForm.brand,
+        expectedForm.model,
+        expectedForm.year,
+        expectedForm.value,
+      );
+    });
+
+    it('should send the data correctly to the registry service when a user presses submit', () => {
       cleanup();
       const mockedRegisterVehicle = jest.fn();
       mockedLocationPathname = '/cadastro-veiculo';
       useBrands.mockReturnValue({ brands: brandsParser(mockedBrands) });
-      useVehicleRegistry.mockReturnValue({ registerVehicle: mockedRegisterVehicle });
+      useVehicleRegistry.mockReturnValue({
+        registerVehicle: mockedRegisterVehicle,
+        updateVehicle: jest.fn(),
+      });
       const mockedState = { isLoggedIn: true };
       const { getByRole, getAllByRole } = render(
         <MemoryRouter>

@@ -1,5 +1,5 @@
 import React, { useEffect, useContext } from 'react';
-import { useHistory, useLocation } from 'react-router-dom';
+import { useHistory, useLocation, useParams } from 'react-router-dom';
 
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
@@ -24,8 +24,9 @@ const VehicleRegistry = () => {
   const { isLoggedIn } = useContext(AuthenticationContext);
   const { brands } = useBrands();
   const { pathname } = useLocation();
+  const { vehicleId } = useParams();
   const history = useHistory();
-  const { registerVehicle } = useVehicleRegistry();
+  const { registerVehicle, updateVehicle } = useVehicleRegistry();
   const [brand, setBrand] = React.useState({});
   const [model, setModel] = React.useState('');
   const [year, setYear] = React.useState();
@@ -42,7 +43,11 @@ const VehicleRegistry = () => {
 
   const handleOnSubmit = (event) => {
     event.preventDefault();
-    registerVehicle(brand, model, year, value);
+    if (isRegistryMode) {
+      registerVehicle(brand, model, year, value);
+    } else if (isUpdateMode) {
+      updateVehicle(vehicleId, brand, model, year, value);
+    }
   };
 
   useEffect(() => {
@@ -147,6 +152,7 @@ const VehicleRegistry = () => {
               <FormButton
                 color="primary"
                 type="submit"
+                disabled={!isFormValid()}
               >
                 Alterar
               </FormButton>
