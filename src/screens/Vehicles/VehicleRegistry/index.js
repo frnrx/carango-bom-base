@@ -1,16 +1,18 @@
 import React from 'react';
 import { useLocation, useParams } from 'react-router-dom';
 
-import Grid from '@material-ui/core/Grid';
-import TextField from '@material-ui/core/TextField';
-import InputLabel from '@material-ui/core/InputLabel';
-import FormControl from '@material-ui/core/FormControl';
-import OutlinedInput from '@material-ui/core/OutlinedInput';
-import InputAdornment from '@material-ui/core/InputAdornment';
-import FormHelperText from '@material-ui/core/FormHelperText';
-import MenuItem from '@material-ui/core/MenuItem';
-import Box from '@material-ui/core/Box';
-import Typography from '@material-ui/core/Typography';
+import {
+  Grid,
+  TextField,
+  InputLabel,
+  FormControl,
+  OutlinedInput,
+  InputAdornment,
+  FormHelperText,
+  MenuItem,
+  Box,
+  Typography
+} from '@material-ui/core';
 
 import FormButton from '../../../components/FormButton';
 import useErrors from '../../../hooks/useErrors';
