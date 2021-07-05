@@ -1,5 +1,6 @@
 import React from 'react';
 import { render, screen, fireEvent, cleanup } from '@testing-library/react';
+import { MemoryRouter } from 'react-router-dom';
 
 import Login from '..';
 
@@ -16,7 +17,11 @@ jest.mock('react-router-dom', () => ({
 
 describe('Login screen', () => {
   it('should match the snapshot', () => {
-    const { container } = render(<Login />);
+    const { container } = render(
+      <MemoryRouter>
+        <Login />
+      </MemoryRouter>
+    );
 
     expect(container.firstChild).toMatchSnapshot();
   });
@@ -29,18 +34,23 @@ describe('Login form', () => {
   let goBackButton;
 
   beforeEach(() => {
-    render(<Login />);
+    render(
+      <MemoryRouter>
+        <Login />
+      </MemoryRouter>
+    );
 
     emailInput = screen.getByRole('textbox', { name: /E-mail/i });
     passwordInput = screen.getByLabelText(/Senha/i);
     submitButton = screen.getByRole('button', { name: /Logar/i });
-    goBackButton = screen.getByRole('button', { name: /Voltar/i });
+    goBackButton = screen.getByRole('link', { name: /Voltar/i });
   });
 
   it('should render the login form', () => {
     expect(emailInput).toBeInTheDocument();
     expect(passwordInput).toBeInTheDocument();
     expect(submitButton).toBeInTheDocument();
+    expect(goBackButton).toBeInTheDocument();
   });
 
   it('should send the data correctly when a user presses submit', () => {
@@ -52,9 +62,11 @@ describe('Login form', () => {
     };
 
     const { getByRole, getByLabelText } = render(
-      <AuthenticationContext.Provider value={mockedState}>
-        <Login />
-      </AuthenticationContext.Provider>,
+      <MemoryRouter>
+        <AuthenticationContext.Provider value={mockedState}>
+          <Login />
+        </AuthenticationContext.Provider>
+      </MemoryRouter>,
     );
 
     const emailInputWithContext = getByRole('textbox', { name: /E-mail/i });
@@ -139,12 +151,6 @@ describe('Login form', () => {
 
     expect(submitButton).toHaveAttribute('disabled');
   });
-
-  it('should should go to home if the user presses Voltar', () => {
-    fireEvent.click(goBackButton);
-
-    expect(mockHistoryPush).toHaveBeenCalledWith('/');
-  });
 });
 
 describe('login authorization provider usage', () => {
@@ -153,9 +159,11 @@ describe('login authorization provider usage', () => {
       isLoggedIn: true,
     };
     render(
-      <AuthenticationContext.Provider value={mockedState}>
-        <Login />
-      </AuthenticationContext.Provider>,
+      <MemoryRouter>
+        <AuthenticationContext.Provider value={mockedState}>
+          <Login />
+        </AuthenticationContext.Provider>
+      </MemoryRouter>,
     );
 
     expect(mockHistoryPush).toHaveBeenCalledWith('/');
@@ -166,9 +174,11 @@ describe('login authorization provider usage', () => {
       isLoggedIn: false,
     };
     render(
-      <AuthenticationContext.Provider value={mockedState}>
-        <Login />
-      </AuthenticationContext.Provider>,
+      <MemoryRouter>
+        <AuthenticationContext.Provider value={mockedState}>
+          <Login />
+        </AuthenticationContext.Provider>
+      </MemoryRouter>,
     );
 
     expect(mockHistoryPush).not.toHaveBeenCalledWith('/');
@@ -180,9 +190,11 @@ describe('login authorization provider usage', () => {
       isLoading: true,
     };
     render(
-      <AuthenticationContext.Provider value={mockedState}>
-        <Login />
-      </AuthenticationContext.Provider>,
+      <MemoryRouter>
+        <AuthenticationContext.Provider value={mockedState}>
+          <Login />
+        </AuthenticationContext.Provider>
+      </MemoryRouter>,
     );
 
     expect(screen.getByRole('progressbar')).toBeInTheDocument();

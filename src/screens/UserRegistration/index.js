@@ -1,17 +1,15 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { TextField, Button, Grid, CircularProgress, Typography } from '@material-ui/core';
+import { TextField, Grid, CircularProgress, Typography } from '@material-ui/core';
 
 import useErrors from '../../hooks/useErrors';
+import FormButton from '../../components/FormButton';
 
-import { useStyles } from './styles';
 import validations from './validations';
 import useUserRegistration from './hooks/useUserRegistration';
 
 const UserRegistration = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const classes = useStyles();
 
   const { isLoading, register } = useUserRegistration();
 
@@ -88,29 +86,16 @@ const UserRegistration = () => {
             />
           </Grid>
           <Grid item container justify="space-between" xs={8}>
-            <Grid item className={classes.buttonContainer}>
-              <Button
-                to="/usuarios"
-                component={Link}
-                fullWidth
-                variant="contained"
-                className={classes.button}
-              >
-                Cancelar
-              </Button>
-            </Grid>
-            <Grid item className={classes.buttonContainer}>
-              <Button
-                fullWidth
-                type="submit"
-                variant="contained"
-                color="primary"
-                disabled={!isFormValid()}
-                className={classes.button}
-              >
-                {isLoading ? <CircularProgress /> : 'Cadastrar'}
-              </Button>
-            </Grid>
+            <FormButton to="/usuarios" isLink>
+              Cancelar
+            </FormButton>
+            <FormButton
+              color="primary"
+              type="submit"
+              disabled={!isFormValid()}
+            >
+              {isLoading ? <CircularProgress /> : 'Cadastrar'}
+            </FormButton>
           </Grid>
         </Grid>
       </form>

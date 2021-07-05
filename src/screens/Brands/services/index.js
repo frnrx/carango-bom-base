@@ -1,3 +1,6 @@
+import { API_URL } from "../../../services/constants";
+import fetchResponseHandler from "../../../services/fetchResponseHandler";
+
 const BrandService = {
   async register(brand) {
     return fetch('https://carango-bom-api.herokuapp.com/marcas', {
@@ -27,5 +30,7 @@ const BrandService = {
     }).then((r) => r.json());
   },
 };
+
+export const getAllBrands = async () => fetch(`${API_URL}/marcas`).then(fetchResponseHandler);
 
 export default BrandService;

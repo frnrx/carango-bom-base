@@ -6,11 +6,18 @@ import BrandsList from '../screens/Brands/BrandsList';
 import Login from '../screens/Login';
 import VehiclesList from '../screens/Vehicles/VehiclesList';
 import UserRegistration from '../screens/UserRegistration';
+import VehicleRegistry from '../screens/Vehicles/VehicleRegistry';
 
 import AuthenticationRoute from './AuthenticationRoute';
 
 const Routes = () => (
   <Switch>
+    <AuthenticationRoute exact path="/alteracao-veiculo/:vehicleId" isPrivate>
+      <VehicleRegistry />
+    </AuthenticationRoute>
+    <AuthenticationRoute exact path="/cadastro-veiculo" isPrivate>
+      <VehicleRegistry />
+    </AuthenticationRoute>
     <AuthenticationRoute exact path="/cadastro-marca" isPrivate>
       <BrandRegistry />
     </AuthenticationRoute>

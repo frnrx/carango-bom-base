@@ -40,7 +40,7 @@ describe('UserRegistration screen', () => {
     passwordInput = screen.getByLabelText('Senha');
     passwordConfirmationInput = screen.getByLabelText('Confirmação da senha');
     submitButton = screen.getByRole('button', { name: /Cadastrar/i });
-    cancelButton = screen.getByRole('button', { name: /Cancelar/i });
+    cancelButton = screen.getByRole('link', { name: /Cancelar/i });
   });
 
   it('should render all the components correctly', () => {
@@ -149,14 +149,6 @@ describe('UserRegistration screen', () => {
     expect(errorText).toBeInTheDocument();
 
     expect(submitButton).toHaveAttribute('disabled');
-  });
-
-  it('should should go to home if the user presses Voltar', () => {
-    cancelButton = screen.getByRole('button', { name: /Cancelar/i });
-
-    fireEvent.click(cancelButton);
-
-    expect(history.location.pathname).toBe('/usuarios');
   });
 });
 
