@@ -52,7 +52,7 @@ const VehicleRegistry = () => {
       <Box mb={4} textAlign="center">
         <Typography variant="h4" component="h2">
           {isRegistryMode && 'Cadastro de veículos'}
-          {isUpdateMode && 'Alteração de veículos'}
+          {isUpdateMode && 'Alteração de veículo'}
         </Typography>
       </Box>
       <form onSubmit={handleOnSubmit}>

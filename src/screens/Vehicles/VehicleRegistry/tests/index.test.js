@@ -72,7 +72,7 @@ describe('Create/update vehicle form', () => {
           <VehicleRegistry />
         </MemoryRouter>
       );
-      const updateHeading = screen.getByText('Alteração de veículos');
+      const updateHeading = screen.getByText('Alteração de veículo');
       const updateButton = screen.getByRole('button', { name: 'Alterar' })
       expect(updateButton).toBeInTheDocument();
       expect(updateHeading).toBeInTheDocument();
