@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useMemo, useContext } from 'react';
+import React, { useState, useMemo, useContext } from 'react';
 import { Link } from 'react-router-dom';
 
 import { DataGrid } from '@material-ui/data-grid';
@@ -6,39 +6,18 @@ import Button from '@material-ui/core/Button';
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 
-import columns from './columns';
-import VehicleService from '../services';
-import vehicleParser from './vehicleParser';
 import { AuthenticationContext } from '../../../contexts/authentication';
+import useVehicles from './hooks/useVehicles';
+import columns from './columns';
 
 const VehiclesList = () => {
   const { isLoggedIn } = useContext(AuthenticationContext);
-  const [vehicles, setVehicles] = useState([]);
+  const { vehicles, isLoading, deleteVehicle } = useVehicles();
   const [selectedVehicle, setSelectedVehicle] = useState({});
-  const [isLoading, setIsLoading] = useState(false);
   const shouldDisableButtons = useMemo(() =>
     selectedVehicle && Object.keys(selectedVehicle).length === 0,
   [selectedVehicle]);
   const handleOnRowSelected = (selectedRow) => setSelectedVehicle(selectedRow.data);
-
-  const loadVehicles = () => {
-    VehicleService.getAll()
-      .then((data) => {
-        setVehicles(vehicleParser(data));
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
-  };
-
-  const deleteVehicle = () => {
-    VehicleService.delete(selectedVehicle);
-  };
-
-  useEffect(() => {
-    setIsLoading(true);
-    loadVehicles();
-  }, []);
 
   return (
     <>
@@ -62,7 +41,7 @@ const VehiclesList = () => {
           <Button
             variant="contained"
             color="secondary"
-            onClick={deleteVehicle}
+            onClick={deleteVehicle(selectedVehicle.id)}
             disabled={shouldDisableButtons}
           >
             Excluir

@@ -3,7 +3,7 @@ const vehicleParser = (vehicles) =>
     id: vehicle.id,
     brand: vehicle.marca.nome,
     year: vehicle.ano,
-    value: vehicle.valor,
+    value: vehicle.preco,
     model: vehicle.modelo,
   }));
 
