@@ -12,7 +12,7 @@ import AuthenticationRoute from './AuthenticationRoute';
 
 const Routes = () => (
   <Switch>
-    <AuthenticationRoute exact path="/alteracao-veiculo/:id" isPrivate>
+    <AuthenticationRoute exact path="/alteracao-veiculo/:vehicleId" isPrivate>
       <VehicleRegistry />
     </AuthenticationRoute>
     <AuthenticationRoute exact path="/cadastro-veiculo" isPrivate>
