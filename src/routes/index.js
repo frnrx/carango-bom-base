@@ -5,7 +5,7 @@ import BrandRegistry from '../screens/Brands/BrandRegistry';
 import BrandsList from '../screens/Brands/BrandsList';
 import Login from '../screens/Login';
 import VehiclesList from '../screens/Vehicles/VehiclesList';
-import UserRegistration from '../screens/UserRegistration';
+import UserRegistration from '../screens/Users/UserRegistration';
 import VehicleRegistry from '../screens/Vehicles/VehicleRegistry';
 
 import AuthenticationRoute from './AuthenticationRoute';

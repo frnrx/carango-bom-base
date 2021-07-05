@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { TextField, Grid, CircularProgress, Typography } from '@material-ui/core';
 
-import useErrors from '../../hooks/useErrors';
-import FormButton from '../../components/FormButton';
+import useErrors from '../../../hooks/useErrors';
+import FormButton from '../../../components/FormButton';
 
 import validations from './validations';
 import useUserRegistration from './hooks/useUserRegistration';
@@ -89,11 +89,7 @@ const UserRegistration = () => {
             <FormButton to="/usuarios" isLink>
               Cancelar
             </FormButton>
-            <FormButton
-              color="primary"
-              type="submit"
-              disabled={!isFormValid()}
-            >
+            <FormButton color="primary" type="submit" disabled={!isFormValid()}>
               {isLoading ? <CircularProgress /> : 'Cadastrar'}
             </FormButton>
           </Grid>
