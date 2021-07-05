@@ -4,7 +4,6 @@ import { MemoryRouter } from 'react-router-dom';
 
 import VehicleRegistry from '..';
 
-import { AuthenticationContext } from '../../../../contexts/authentication';
 import useBrands from '../hooks/useBrands';
 import useVehicleRegistry from '../hooks/useVehicleRegistry';
 import brandsParser from '../brandsParser';
@@ -13,15 +12,11 @@ import mockedBrands from '../hooks/tests/mockedBrands';
 jest.mock('../hooks/useBrands');
 jest.mock('../hooks/useVehicleRegistry');
 
-const mockHistoryPush = jest.fn();
 const mockedVehicleId = 123;
 let mockedLocationPathname = '/cadastro-veiculo';
 
 jest.mock('react-router-dom', () => ({
   ...jest.requireActual('react-router-dom'),
-  useHistory: () => ({
-    push: mockHistoryPush,
-  }),
   useLocation: () => ({
     pathname: mockedLocationPathname,
   }),
@@ -39,12 +34,9 @@ describe('Create/update vehicle form', () => {
   beforeEach(() => {
     useBrands.mockReturnValue({ brands: brandsParser(mockedBrands) });
     useVehicleRegistry.mockReturnValue({ registerVehicle: jest.fn(), updateVehicle: jest.fn() });
-    const mockedState = { isLoggedIn: true };
     render(
       <MemoryRouter>
-        <AuthenticationContext.Provider value={mockedState}>
-          <VehicleRegistry />
-        </AuthenticationContext.Provider>
+        <VehicleRegistry />
       </MemoryRouter>,
     );
 
@@ -105,12 +97,9 @@ describe('Create/update vehicle form', () => {
         registerVehicle: jest.fn(),
         updateVehicle: mockedUpdateService,
       });
-      const mockedState = { isLoggedIn: true };
       const { getByRole, getAllByRole } = render(
         <MemoryRouter>
-          <AuthenticationContext.Provider value={mockedState}>
-            <VehicleRegistry />
-          </AuthenticationContext.Provider>
+          <VehicleRegistry />
         </MemoryRouter>,
       );
       modelInput = getByRole('textbox', { name: 'Modelo' });
@@ -162,12 +151,9 @@ describe('Create/update vehicle form', () => {
         registerVehicle: mockedRegisterVehicle,
         updateVehicle: jest.fn(),
       });
-      const mockedState = { isLoggedIn: true };
       const { getByRole, getAllByRole } = render(
         <MemoryRouter>
-          <AuthenticationContext.Provider value={mockedState}>
-            <VehicleRegistry />
-          </AuthenticationContext.Provider>
+          <VehicleRegistry />
         </MemoryRouter>,
       );
       modelInput = getByRole('textbox', { name: 'Modelo' });
@@ -258,37 +244,5 @@ describe('Create/update vehicle form', () => {
       expect(registryButton).toBeDisabled();
       expect(errorText).toBeInTheDocument();
     });
-  });
-});
-
-describe('authorization provider usage', () => {
-  it('should not redirect the user to the home if they are already logged', () => {
-    useBrands.mockReturnValue({ brands: brandsParser(mockedBrands) });
-    useVehicleRegistry.mockReturnValue({ registerVehicle: jest.fn() });
-    const mockedState = { isLoggedIn: true };
-    render(
-      <MemoryRouter>
-        <AuthenticationContext.Provider value={mockedState}>
-          <VehicleRegistry />
-        </AuthenticationContext.Provider>
-      </MemoryRouter>,
-    );
-
-    expect(mockHistoryPush).not.toHaveBeenCalledWith('/');
-  });
-
-  it('should redirect the user to the home if they are not logged', () => {
-    useBrands.mockReturnValue({ brands: brandsParser(mockedBrands) });
-    useVehicleRegistry.mockReturnValue({ registerVehicle: jest.fn() });
-    const mockedState = { isLoggedIn: false };
-    render(
-      <MemoryRouter>
-        <AuthenticationContext.Provider value={mockedState}>
-          <VehicleRegistry />
-        </AuthenticationContext.Provider>
-      </MemoryRouter>,
-    );
-
-    expect(mockHistoryPush).toHaveBeenCalledWith('/');
   });
 });

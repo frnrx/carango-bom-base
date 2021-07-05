@@ -1,5 +1,5 @@
-import React, { useEffect, useContext } from 'react';
-import { useHistory, useLocation, useParams } from 'react-router-dom';
+import React from 'react';
+import { useLocation, useParams } from 'react-router-dom';
 
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
@@ -12,7 +12,6 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 
-import { AuthenticationContext } from '../../../contexts/authentication';
 import FormButton from '../../../components/FormButton';
 import useErrors from '../../../hooks/useErrors';
 
@@ -21,11 +20,9 @@ import useVehicleRegistry from './hooks/useVehicleRegistry';
 import validations from './validations';
 
 const VehicleRegistry = () => {
-  const { isLoggedIn } = useContext(AuthenticationContext);
   const { brands } = useBrands();
   const { pathname } = useLocation();
   const { vehicleId } = useParams();
-  const history = useHistory();
   const { registerVehicle, updateVehicle } = useVehicleRegistry();
   const [brand, setBrand] = React.useState({});
   const [model, setModel] = React.useState('');
@@ -49,12 +46,6 @@ const VehicleRegistry = () => {
       updateVehicle(vehicleId, brand, model, year, value);
     }
   };
-
-  useEffect(() => {
-    if (!isLoggedIn) {
-      history.push('/');
-    }
-  }, []);
 
   return (
     <>
