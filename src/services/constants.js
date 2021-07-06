@@ -1,1 +1,1 @@
-export const API_URL = 'https://carango-api.herokuapp.com';
+export const API_URL = process.env.REACT_APP_API_URL;
