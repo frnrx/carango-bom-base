@@ -27,15 +27,11 @@ const VehicleRegistry = () => {
   const { brands } = useBrands();
   const { pathname } = useLocation();
   const { vehicleId } = useParams();
-  const { register: registerVehicle, isLoading: isRegisterLoading } = useVehicleRegistry();
-  const { update: updateVehicle, isLoading: isUpdateLoading } = useVehicleUpdate();
   const [brand, setBrand] = React.useState({});
   const [model, setModel] = React.useState('');
   const [year, setYear] = React.useState();
   const [value, setValue] = React.useState();
   const [errors, validateFields, isFormValid] = useErrors(validations);
-  const shouldDisableRegistryButton = !isFormValid() || isRegisterLoading;
-  const shouldDisableUpdateButton = !isFormValid() || isUpdateLoading;
 
   const isRegistryMode = pathname.includes('/cadastro-veiculo');
   const isUpdateMode = pathname.includes('/alteracao-veiculo');
@@ -44,6 +40,15 @@ const VehicleRegistry = () => {
   const handleModelChange = (event) => setModel(event.target.value);
   const handleYearChange = (event) => setYear(event.target.value);
   const handleValueChange = (event) => setValue(event.target.value);
+
+  const { register: registerVehicle, isLoading: isRegisterLoading } = useVehicleRegistry();
+  const { update: updateVehicle, isUpdateLoading } = useVehicleUpdate(
+    vehicleId,
+    { setBrand, setModel, setYear, setValue }
+  );
+
+  const shouldDisableRegistryButton = !isFormValid() || isRegisterLoading;
+  const shouldDisableUpdateButton = !isFormValid() || isUpdateLoading;
 
   const handleOnSubmit = (event) => {
     event.preventDefault();
@@ -90,6 +95,7 @@ const VehicleRegistry = () => {
               name="model"
               role="textbox"
               variant="outlined"
+              value={model}
               onChange={handleModelChange}
               onBlur={validateFields}
               helperText={errors.model.text}
@@ -105,6 +111,7 @@ const VehicleRegistry = () => {
               type="number"
               name="year"
               variant="outlined"
+              value={year}
               onChange={handleYearChange}
               onBlur={validateFields}
               helperText={errors.year.text}
@@ -120,6 +127,7 @@ const VehicleRegistry = () => {
                 id="value"
                 name="value"
                 type="number"
+                value={value}
                 startAdornment={<InputAdornment position="start">R$</InputAdornment>}
                 labelWidth={42}
                 aria-describedby="value-helper-text"

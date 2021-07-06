@@ -106,7 +106,7 @@ describe('Create/update vehicle form', () => {
       cleanup();
       mockedLocationPathname = '/alteracao-veiculo';
       useVehicleRegistry.mockReturnValue({ register: jest.fn() });
-      useVehicleUpdate.mockReturnValue({ update: jest.fn(), isLoading: true });
+      useVehicleUpdate.mockReturnValue({ update: jest.fn(), isUpdateLoading: true });
       const { getByRole } = render(
         <MemoryRouter>
           <VehicleRegistry />
