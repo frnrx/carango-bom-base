@@ -14,9 +14,10 @@ const VehiclesList = () => {
   const { isLoggedIn } = useContext(AuthenticationContext);
   const { vehicles, isLoading, deleteVehicle } = useVehicles();
   const [selectedVehicle, setSelectedVehicle] = useState({});
-  const shouldDisableButtons = useMemo(() =>
-    selectedVehicle && Object.keys(selectedVehicle).length === 0,
-  [selectedVehicle]);
+  const shouldDisableButtons = useMemo(
+    () => selectedVehicle && Object.keys(selectedVehicle).length === 0,
+    [selectedVehicle],
+  );
   const handleOnRowSelected = (selectedRow) => setSelectedVehicle(selectedRow.data);
 
   return (
@@ -36,7 +37,7 @@ const VehiclesList = () => {
         disableColumnSelector
         disableDensitySelector
       />
-      {isLoggedIn &&
+      {isLoggedIn && (
         <Box display="flex" justifyContent="flex-end" mt={2}>
           <Button
             variant="contained"
@@ -61,7 +62,7 @@ const VehiclesList = () => {
             Incluir
           </Button>
         </Box>
-      }
+      )}
     </>
   );
 };
