@@ -1,77 +1,70 @@
-import React, { useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom';
-import { Button, Fab } from '@material-ui/core';
+import React, { useState, useContext, useMemo } from 'react';
+import { Link } from 'react-router-dom';
+
+import { Button } from '@material-ui/core';
 import { DataGrid } from '@material-ui/data-grid';
-import AddIcon from '@material-ui/icons/Add';
+import Box from '@material-ui/core/Box';
+import Typography from '@material-ui/core/Typography';
 
-import BrandService from '../services';
-import useStyles from './styles';
+import { AuthenticationContext } from '../../../contexts/authentication';
 
-const colunas = [{ field: 'nome', headerName: 'Marca', width: 200 }];
+import useBrands from './hooks/useBrands';
+
+const columns = [{ field: 'nome', headerName: 'Marca', width: 200 }];
 
 const BrandsList = () => {
-  const [brands, setBrands] = useState([]);
-  const [selectedBrand, setSelectedBrand] = useState();
-  const classes = useStyles();
-  const history = useHistory();
-
-  const loadBrands = () => {
-    BrandService.getAll().then((data) => setBrands(data));
-  };
-
-  const change = () => {
-    // if (selectedBrand && selectedBrand?.id) {
-    //   history.push(`/alteracao-marca/${selectedBrand?.id}`);
-    // }
-  };
-
-  const remove = () => {
-    BrandService.remove(selectedBrand).then(() => {
-      setSelectedBrand(null);
-      loadBrands();
-    });
-  };
-
-  useEffect(() => loadBrands(), []);
+  const { isLoggedIn } = useContext(AuthenticationContext);
+  const { brands, isLoading, deleteBrand } = useBrands();
+  const [selectedBrand, setSelectedBrand] = useState({});
+  const shouldDisableButtons = useMemo(
+    () => selectedBrand && Object.keys(selectedBrand).length === 0,
+  [selectedBrand]);
+  const handleOnRowSelected = (selectedRow) => setSelectedBrand(selectedRow.data);
 
   return (
-    <div style={{ height: 300, width: '100%' }}>
+    <>
+      <Box mb={4}>
+        <Typography variant="h3" component="h2">
+          Lista de marcas
+        </Typography>
+      </Box>
       <DataGrid
+        columns={columns}
         rows={brands}
-        columns={colunas}
-        onRowSelected={(gridSelection) => setSelectedBrand(gridSelection.data)}
+        loading={isLoading}
+        onRowSelected={handleOnRowSelected}
+        autoHeight
+        disableColumnMenu
+        disableColumnSelector
+        disableDensitySelector
       />
-
-      <div className={classes.actionsToolbar}>
-        <Button
-          className={classes.actions}
-          variant="contained"
-          color="secondary"
-          disabled={!selectedBrand}
-          onClick={() => remove()}
-        >
-          Excluir
-        </Button>
-        <Button
-          className={classes.actions}
-          variant="contained"
-          color="primary"
-          disabled={!selectedBrand}
-          onClick={() => change()}
-        >
-          Alterar
-        </Button>
-      </div>
-
-      <Fab
-        color="primary"
-        aria-label="add"
-        className={classes.fab}
-        onClick={() => history.push('/cadastro-marca')}
-      >
-        <AddIcon />
-      </Fab>
-    </div>
+      {isLoggedIn &&
+        <Box display="flex" justifyContent="flex-end" mt={2}>
+          <Button
+            variant="contained"
+            color="secondary"
+            onClick={deleteBrand(selectedBrand.id)}
+            disabled={shouldDisableButtons}
+          >
+            Excluir
+          </Button>
+          <Box mx={1}>
+            <Button
+              to={`alteracao-marca/${selectedBrand.id}`}
+              component={Link}
+              variant="contained"
+              color="primary"
+              disabled={shouldDisableButtons}
+            >
+              Alterar
+            </Button>
+          </Box>
+          <Button to="/cadastro-marca" component={Link} variant="contained" color="primary">
+            Incluir
+          </Button>
+        </Box>
+      }      
+    </>
   );
 };
 
