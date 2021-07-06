@@ -1,9 +1,10 @@
 import React from 'react';
 import { renderHook } from '@testing-library/react-hooks';
 
-import useUsers from '../useUsers';
 import { SnackBarContext } from '../../../../../contexts/snackbar';
+import { AuthenticationContext } from '../../../../../contexts/authentication';
 import { getAllUsers } from '../../services';
+import useUsers from '../useUsers';
 
 import mockedUsers from '../../tests/mockedUsers';
 
@@ -11,8 +12,15 @@ jest.mock('../../services');
 
 describe('useUsers', () => {
   const mockedSnackbarValue = { addAlert: jest.fn() };
+  const mockedAuthValue = { userJWT: 'fakeuserjwt' };
+
   const wrapper = ({ children }) => (
-    <SnackBarContext.Provider value={mockedSnackbarValue}>{children}</SnackBarContext.Provider>
+    <SnackBarContext.Provider value={mockedSnackbarValue}>
+      {' '}
+      <AuthenticationContext.Provider value={mockedAuthValue}>
+        {children}
+      </AuthenticationContext.Provider>
+    </SnackBarContext.Provider>
   );
   describe('getAllUsers handling', () => {
     it('should handle the getAllUsers correctly after the hook first useEffect', async () => {
