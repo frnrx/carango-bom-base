@@ -1,7 +1,7 @@
 import { useState, useContext, useEffect } from 'react';
 
 import { SnackBarContext } from '../../../../contexts/snackbar';
-import { getAllUsers } from '../services';
+import { getAllUsers, removeUser } from '../services';
 
 const useUsers = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -24,12 +24,23 @@ const useUsers = () => {
       });
   };
 
+  const deleteUser = (vehicleId) => () => {
+    removeUser(vehicleId, userJWT)
+      .then((removedVehicle) => {
+        const vehiclesWithoutRemovedVehicle = users.filter((user) => user.id !== removedVehicle.id);
+        setUsers(vehiclesWithoutRemovedVehicle);
+      })
+      .catch(() => {
+        addAlert({ content: 'Erro inesperado ao excluir usuário!', customSeverity: 'error' });
+      });
+  };
+
   useEffect(() => {
     setIsLoading(true);
     loadUsers();
   }, []);
 
-  return { users, isLoading };
+  return { users, isLoading, deleteUser };
 };
 
 export default useUsers;

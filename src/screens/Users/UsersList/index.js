@@ -7,8 +7,9 @@ import useUsers from './hooks/useUsers';
 import columns from './columns';
 
 const UsersList = () => {
-  const { users, isLoading } = useUsers();
   const [selectedUser, setSelectedUser] = useState({});
+
+  const { users, isLoading, deleteUser } = useUsers();
 
   const shouldDisableButtons = useMemo(
     () => selectedUser && Object.keys(selectedUser).length === 0,
@@ -35,7 +36,12 @@ const UsersList = () => {
         disableDensitySelector
       />
       <Box display="flex" justifyContent="flex-end" mt={2}>
-        <Button variant="contained" color="primary" disabled={shouldDisableButtons}>
+        <Button
+          variant="contained"
+          color="primary"
+          disabled={shouldDisableButtons}
+          onClick={deleteUser(selectedUser.id)}
+        >
           Excluir
         </Button>
         <Box mx={1}>

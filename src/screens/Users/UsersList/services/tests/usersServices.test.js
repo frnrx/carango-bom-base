@@ -1,10 +1,11 @@
-import { getAllUsers } from '..';
+import { getAllUsers, removeUser } from '..';
 
 import { API_URL } from '../../../../../services/constants';
+import buildAuthHeader from '../../../../../services/buildAuthHeader';
 
 beforeAll(() => jest.spyOn(window, 'fetch'));
 
-describe('Vehicles services', () => {
+describe('Users services', () => {
   beforeEach(() => {
     window.fetch.mockResolvedValueOnce({
       ok: true,
@@ -21,6 +22,19 @@ describe('Vehicles services', () => {
         headers: {
           Authorization: 'Bearer 1234',
         },
+      });
+    });
+  });
+
+  describe('removeUser', () => {
+    it('should call the fetch function with the correct url', () => {
+      const mockedUserId = 123;
+      const mockedJWT = 'fakeuserjwt';
+      removeUser(mockedUserId, mockedJWT);
+
+      expect(window.fetch).toHaveBeenCalledWith(`${API_URL}/usuario/${mockedUserId}`, {
+        method: 'DELETE',
+        headers: buildAuthHeader(mockedJWT),
       });
     });
   });

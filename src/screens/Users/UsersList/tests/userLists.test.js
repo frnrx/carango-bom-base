@@ -2,6 +2,7 @@ import React from 'react';
 import { MemoryRouter } from 'react-router-dom';
 import { render, screen, fireEvent } from '@testing-library/react';
 
+import { AuthenticationContext } from '../../../../contexts/authentication';
 import useUsers from '../hooks/useUsers';
 import UsersList from '..';
 import mockedUsers from './mockedUsers';
@@ -10,15 +11,20 @@ jest.mock('../hooks/useUsers');
 
 describe('<UsersList />', () => {
   beforeEach(() => {
+    const mockedState = { isLoggedIn: true };
+    const mockedDeleteUser = jest.fn();
     useUsers.mockReturnValue({
       users: mockedUsers,
       isLoading: false,
+      deleteUser: mockedDeleteUser,
     });
 
     render(
-      <MemoryRouter>
-        <UsersList />
-      </MemoryRouter>,
+      <AuthenticationContext.Provider value={mockedState}>
+        <MemoryRouter>
+          <UsersList />
+        </MemoryRouter>
+      </AuthenticationContext.Provider>,
     );
   });
 
