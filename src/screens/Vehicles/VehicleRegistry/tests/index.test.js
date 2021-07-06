@@ -101,6 +101,19 @@ describe('Create/update vehicle form', () => {
       );
       expect(getByRole('progressbar')).toBeInTheDocument();
     });
+
+    it('should render the loading component when the update is loading (update mode)', () => {
+      cleanup();
+      mockedLocationPathname = '/alteracao-veiculo';
+      useVehicleRegistry.mockReturnValue({ register: jest.fn() });
+      useVehicleUpdate.mockReturnValue({ update: jest.fn(), isLoading: true });
+      const { getByRole } = render(
+        <MemoryRouter>
+          <VehicleRegistry />
+        </MemoryRouter>,
+      );
+      expect(getByRole('progressbar')).toBeInTheDocument();
+    });
   });
 
   describe('form functioning', () => {

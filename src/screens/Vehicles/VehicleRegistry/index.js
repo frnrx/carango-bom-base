@@ -28,12 +28,14 @@ const VehicleRegistry = () => {
   const { pathname } = useLocation();
   const { vehicleId } = useParams();
   const { register: registerVehicle, isLoading: isRegisterLoading } = useVehicleRegistry();
-  const { update: updateVehicle } = useVehicleUpdate();
+  const { update: updateVehicle, isLoading: isUpdateLoading } = useVehicleUpdate();
   const [brand, setBrand] = React.useState({});
   const [model, setModel] = React.useState('');
   const [year, setYear] = React.useState();
   const [value, setValue] = React.useState();
   const [errors, validateFields, isFormValid] = useErrors(validations);
+  const shouldDisableRegistryButton = !isFormValid() || isRegisterLoading;
+  const shouldDisableUpdateButton = !isFormValid() || isUpdateLoading;
 
   const isRegistryMode = pathname.includes('/cadastro-veiculo');
   const isUpdateMode = pathname.includes('/alteracao-veiculo');
@@ -132,14 +134,14 @@ const VehicleRegistry = () => {
             </FormControl>
           </Grid>
           <Grid item container justify="space-between" xs={8}>
-            <FormButton to="/usuarios" isLink>
+            <FormButton to="/" isLink>
               Cancelar
             </FormButton>
             {isRegistryMode &&
               <FormButton
                 color="primary"
                 type="submit"
-                disabled={!isFormValid()}
+                disabled={shouldDisableRegistryButton}
               >
                 {isRegisterLoading ? <CircularProgress /> : 'Cadastrar'}
               </FormButton>
@@ -148,9 +150,9 @@ const VehicleRegistry = () => {
               <FormButton
                 color="primary"
                 type="submit"
-                disabled={!isFormValid()}
+                disabled={shouldDisableUpdateButton}
               >
-                Alterar
+                {isUpdateLoading ? <CircularProgress /> : 'Alterar'}
               </FormButton>
             }
           </Grid>
