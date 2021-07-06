@@ -1,6 +1,7 @@
 import { useState, useContext, useEffect } from 'react';
 
 import { SnackBarContext } from '../../../../contexts/snackbar';
+import { AuthenticationContext } from '../../../../contexts/authentication';
 import { getAllUsers, removeUser } from '../services';
 
 const useUsers = () => {
@@ -8,7 +9,7 @@ const useUsers = () => {
   const [users, setUsers] = useState([]);
   const { addAlert } = useContext(SnackBarContext);
 
-  const userJWT = localStorage.getItem('userJWT');
+  const { userJWT } = useContext(AuthenticationContext);
 
   const loadUsers = () => {
     getAllUsers(userJWT)

@@ -8,6 +8,7 @@ import validations from './validations';
 import useUserRegistration from './hooks/useUserRegistration';
 
 const UserRegistration = () => {
+  const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -18,7 +19,7 @@ const UserRegistration = () => {
   const onSubmit = (event) => {
     event.preventDefault();
 
-    register(email, password);
+    register(name, email, password);
   };
 
   const handleUpdateEmail = (event) => {
@@ -27,6 +28,10 @@ const UserRegistration = () => {
 
   const handleUpdatePassword = (event) => {
     setPassword(event.target.value);
+  };
+
+  const handleUpdateName = (event) => {
+    setName(event.target.value);
   };
 
   const handleValidatePasswordConfirmation = (event) =>
@@ -41,6 +46,21 @@ const UserRegistration = () => {
       </Typography>
       <form onSubmit={onSubmit}>
         <Grid container direction="column" spacing={2} alignContent="center">
+          <Grid container item xs={8}>
+            <TextField
+              fullWidth
+              id="name"
+              label="Nome"
+              type="name"
+              name="name"
+              role="textbox"
+              onChange={handleUpdateName}
+              variant="outlined"
+              onBlur={validateFields}
+              helperText={errors.name.text}
+              error={errors.name.showError}
+            />
+          </Grid>
           <Grid container item xs={8}>
             <TextField
               fullWidth
