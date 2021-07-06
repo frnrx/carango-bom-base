@@ -67,7 +67,7 @@ describe('useVehicles', () => {
       expect(removedVehicle).toBeUndefined();
     });
 
-    it('should call the addAlert function when the getAllVehicles returns an error', async () => {
+    it('should call the addAlert function when the removeVehicle returns an error', async () => {
       const mockedServiceReturn = { error: 'error' };
       getAllVehicles.mockImplementationOnce(() => Promise.resolve(mockedVehicles));
       removeVehicle.mockImplementationOnce(() => Promise.reject(mockedServiceReturn));
