@@ -1,4 +1,4 @@
-import { getAllVehicles, removeVehicle, registerVehicle, updateVehicle } from '..';
+import { getAllVehicles, removeVehicle, registerVehicle, updateVehicle, getVehicle } from '..';
 
 import { API_URL } from '../../../../services/constants';
 import buildAuthHeader from '../../../../services/buildAuthHeader';
@@ -99,6 +99,19 @@ describe('Vehicles services', () => {
           },
           body: JSON.stringify(expectedBody),
         },
+      );
+    });
+  });
+
+  describe('getVehicle', () => {
+    it('should call the fetch function with the correct url and options', () => {
+      const mockedVehicleId = 123;
+      const mockedJWT = 'fakeuserjwt';
+      getVehicle(mockedVehicleId, mockedJWT);
+  
+      expect(window.fetch).toHaveBeenCalledWith(
+        `${API_URL}/veiculo/${mockedVehicleId}`,
+        { headers: buildAuthHeader(mockedJWT) },
       );
     });
   });

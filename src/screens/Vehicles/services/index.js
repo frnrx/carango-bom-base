@@ -15,6 +15,12 @@ const buildRequestBody = (brand, model, year, value) => ({
 
 export const getAllVehicles = async () => fetch(`${API_URL}/veiculo`).then(fetchResponseHandler);
 
+export const getVehicle = async (vehicleId, userJWT) => {
+  const requestOptions = { method: 'GET', headers: buildAuthHeader(userJWT) };
+
+  return fetch(`${API_URL}/veiculo/${vehicleId}`, requestOptions).then(fetchResponseHandler);
+};
+
 export const removeVehicle = async (vehicleId, userJWT) => {
   const requestOptions = {
     method: 'DELETE',
