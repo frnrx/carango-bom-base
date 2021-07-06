@@ -1,4 +1,4 @@
-import { getAllVehicles, removeVehicle, registerVehicle } from '..';
+import { getAllVehicles, removeVehicle, registerVehicle, updateVehicle } from '..';
 
 import { API_URL } from '../../../../services/constants';
 import buildAuthHeader from '../../../../services/buildAuthHeader';
@@ -53,11 +53,46 @@ describe('Vehicles services', () => {
         modelo: mockedModel,
         ano: mockedYear,
         preco: mockedValue,
+        isVendido: false,
       };
       expect(window.fetch).toHaveBeenCalledWith(
         `${API_URL}/veiculo`,
         {
           method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            ...buildAuthHeader(mockedJWT),
+          },
+          body: JSON.stringify(expectedBody),
+        },
+      );
+    });
+  });
+
+  describe('updateVehicle', () => {
+    it('should call the fetch function with the correct url and options', () => {
+      const mockedJWT = 'fakeuserjwt';
+      const mockedVehicleId = 99;
+      const mockedBrand = { id: 1, name: 'Fake Brand' };
+      const mockedModel = 'Fake vehicle model';
+      const mockedYear = 1999;
+      const mockedValue = 20000;
+      updateVehicle(mockedJWT, mockedVehicleId, mockedBrand, mockedModel, mockedYear, mockedValue);
+
+      const expectedBody = {
+        marca: {
+          id: mockedBrand.id,
+          nome: mockedBrand.name,
+        },
+        modelo: mockedModel,
+        ano: mockedYear,
+        preco: mockedValue,
+        isVendido: false,
+      };
+      expect(window.fetch).toHaveBeenCalledWith(
+        `${API_URL}/veiculo/${mockedVehicleId}`,
+        {
+          method: 'PUT',
           headers: {
             'Content-Type': 'application/json',
             ...buildAuthHeader(mockedJWT),
