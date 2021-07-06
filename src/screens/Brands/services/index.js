@@ -1,4 +1,5 @@
 import { API_URL } from "../../../services/constants";
+import buildAuthHeader from "../../../services/buildAuthHeader";
 import fetchResponseHandler from "../../../services/fetchResponseHandler";
 
 const BrandService = {
@@ -19,18 +20,17 @@ const BrandService = {
   async get(id) {
     return fetch(`https://carango-bom-api.herokuapp.com/marcas/${id}`).then((r) => r.json());
   },
-
-  async getAll() {
-    return fetch('https://carango-bom-api.herokuapp.com/marcas').then((r) => r.json());
-  },
-
-  async remove(brand) {
-    return fetch(`https://carango-bom-api.herokuapp.com/marcas/${brand.id}`, {
-      method: 'DELETE',
-    }).then((r) => r.json());
-  },
 };
 
 export const getAllBrands = async () => fetch(`${API_URL}/marcas`).then(fetchResponseHandler);
+
+export const removeBrand = async (brandId, userJWT) => {
+  const requestOptions = {
+    method: 'DELETE',
+    headers: buildAuthHeader(userJWT),
+  };
+
+  return fetch(`${API_URL}/marcas/${brandId}`, requestOptions).then(fetchResponseHandler);
+};
 
 export default BrandService;
