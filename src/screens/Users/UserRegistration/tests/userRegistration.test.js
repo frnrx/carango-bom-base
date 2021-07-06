@@ -3,7 +3,7 @@ import { Router } from 'react-router-dom';
 import { render, screen, fireEvent, act, waitFor } from '@testing-library/react';
 import { createMemoryHistory } from 'history';
 
-import { SnackBarContext } from '../../../contexts/snackbar';
+import { SnackBarContext } from '../../../../contexts/snackbar';
 
 import UserRegistration from '..';
 import { userRegistrationService } from '../services';

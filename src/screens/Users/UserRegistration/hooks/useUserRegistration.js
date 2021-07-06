@@ -2,7 +2,7 @@ import { useState, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 
 import { userRegistrationService } from '../services';
-import { SnackBarContext } from '../../../contexts/snackbar';
+import { SnackBarContext } from '../../../../contexts/snackbar';
 
 const useUserRegistration = () => {
   const [isLoading, setIsLoading] = useState(false);
