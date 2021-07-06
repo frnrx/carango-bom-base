@@ -1,6 +1,6 @@
 import { userRegistrationService } from '..';
 
-import { API_URL } from '../../../../services/constants';
+import { API_URL } from '../../../../../services/constants';
 
 beforeAll(() => jest.spyOn(window, 'fetch'));
 
