@@ -1,4 +1,4 @@
-import { getAllBrands, removeBrand } from '..';
+import { getAllBrands, removeBrand, registerBrand, updateBrand, getBrand } from '..';
 
 import { API_URL } from '../../../../services/constants';
 import buildAuthHeader from '../../../../services/buildAuthHeader';
@@ -13,7 +13,7 @@ describe('Brands services', () => {
     });
   });
 
-  describe('getAllVehicles', () => {
+  describe('getAllBrands', () => {
     it('should call the fetch function with the correct url', () => {
       getAllBrands();
 
@@ -33,6 +33,62 @@ describe('Brands services', () => {
           method: 'DELETE',
           headers: buildAuthHeader(mockedJWT),
         },
+      );
+    });
+  });
+
+  describe('registerBrand', () => {
+    it('should call the fetch function with the correct url and options', () => {
+      const mockedJWT = 'fakeuserjwt';
+      const mockedBrand = 'Fake Brand';
+      registerBrand(mockedJWT, mockedBrand);
+
+      const expectedBody = { nome: mockedBrand };
+      expect(window.fetch).toHaveBeenCalledWith(
+        `${API_URL}/marca`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            ...buildAuthHeader(mockedJWT),
+          },
+          body: JSON.stringify(expectedBody),
+        },
+      );
+    });
+  });
+
+  describe('updateBrand', () => {
+    it('should call the fetch function with the correct url and options', () => {
+      const mockedJWT = 'fakeuserjwt';
+      const mockedBrandId = 99;
+      const mockedBrand = 'Fake Brand';
+      updateBrand(mockedJWT, mockedBrandId, mockedBrand);
+
+      const expectedBody = { nome: mockedBrand };
+      expect(window.fetch).toHaveBeenCalledWith(
+        `${API_URL}/marca/${mockedBrandId}`,
+        {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+            ...buildAuthHeader(mockedJWT),
+          },
+          body: JSON.stringify(expectedBody),
+        },
+      );
+    });
+  });
+
+  describe('getBrand', () => {
+    it('should call the fetch function with the correct url and options', () => {
+      const mockedBrandId = 123;
+      const mockedJWT = 'fakeuserjwt';
+      getBrand(mockedBrandId, mockedJWT);
+  
+      expect(window.fetch).toHaveBeenCalledWith(
+        `${API_URL}/marca/${mockedBrandId}`,
+        { method: 'GET', headers: buildAuthHeader(mockedJWT) },
       );
     });
   });
