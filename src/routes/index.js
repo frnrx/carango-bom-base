@@ -22,7 +22,7 @@ const Routes = () => (
     <AuthenticationRoute exact path="/cadastro-marca" isPrivate>
       <BrandRegistry />
     </AuthenticationRoute>
-    <AuthenticationRoute exact path="/alteracao-marca/:id" isPrivate>
+    <AuthenticationRoute exact path="/alteracao-marca/:brandId" isPrivate>
       <BrandRegistry />
     </AuthenticationRoute>
     <AuthenticationRoute exact path="/marcas" isPrivate>

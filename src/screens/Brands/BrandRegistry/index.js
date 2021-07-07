@@ -1,81 +1,98 @@
-import { Button, TextField } from '@material-ui/core';
-import React, { useEffect, useState } from 'react';
-import { useHistory, useParams } from 'react-router-dom';
+import React from 'react';
+import { useLocation, useParams } from 'react-router-dom';
+
+import {
+  TextField,
+  Typography,
+  Box,
+  Grid,
+  CircularProgress
+} from '@material-ui/core';
 
 import useErrors from '../../../hooks/useErrors';
-import BrandService from '../services';
+import FormButton from '../../../components/FormButton';
+
+import useBrandRegistry from './hooks/useBrandRegistry';
+import useBrandUpdate from './hooks/useBrandUpdate';
+import validations from './validations';
 
 const BrandRegistry = () => {
-  const [brand, setBrand] = useState('');
-
-  const history = useHistory();
-
-  const { id } = useParams();
-
-  const validations = {
-    brand: (data) => {
-      if (data && data.length >= 3) {
-        return { valid: true };
-      }
-      return { valid: false, text: 'Marca deve ter ao menos 3 letras.' };
-    },
-  };
-
+  const { pathname } = useLocation();
+  const { brandId } = useParams();
+  const [brand, setBrand] = React.useState('');
+  const { register: registerBrand, isLoading: isRegisterLoading } = useBrandRegistry();
+  const { update: updateBrand, isUpdateLoading, isGetLoading } = useBrandUpdate(brandId, setBrand);
   const [errors, validateFields, isFormValid] = useErrors(validations);
+  const shouldDisableRegistryButton = !isFormValid() || isRegisterLoading;
+  const shouldDisableUpdateButton = !isFormValid() || isUpdateLoading;
 
-  const handleCancel = () => {
-    history.goBack();
-  };
+  const isRegistryMode = pathname.includes('/cadastro-marca');
+  const isUpdateMode = pathname.includes('/alteracao-marca');
 
-  // TODO: Avaliar remover disable na próxima linha
-  useEffect(() => {
-    if (id) {
-      BrandService.get(id).then((m) => setBrand(m.name));
+  const handleBrandChange = (event) => setBrand(event.target.value);
+
+  const handleOnSubmit = (event) => {
+    event.preventDefault();
+    if (isRegistryMode) {
+      registerBrand(brand);
+    } else if (isUpdateMode) {
+      updateBrand(brandId, brand);
     }
-  }, [id]); // eslint-disable-line
+  };
 
   return (
-    <form
-      onSubmit={(event) => {
-        event.preventDefault();
-        if (isFormValid()) {
-          if (id) {
-            BrandService.update({ id, name: brand }).then(() => {
-              history.goBack();
-            });
-          } else {
-            BrandService.register({ name: brand }).then(() => {
-              setBrand('');
-              history.goBack();
-            });
-          }
-        }
-      }}
-    >
-      <TextField
-        value={brand}
-        onChange={(evt) => setBrand(evt.target.value)}
-        onBlur={validateFields}
-        helperText={errors.brand.text}
-        error={!errors.brand.valid}
-        name="brand"
-        id="brand"
-        label="Marca"
-        type="text"
-        variant="outlined"
-        fullWidth
-        required
-        margin="normal"
-      />
-
-      <Button variant="contained" color="primary" type="submit" disabled={!isFormValid()}>
-        {id ? 'Alterar' : 'Cadastrar'}
-      </Button>
-
-      <Button variant="contained" color="secondary" onClick={handleCancel}>
-        Cancelar
-      </Button>
-    </form>
+    <>
+      <Box mb={4} textAlign="center">
+        <Typography variant="h4" component="h2">
+          {isRegistryMode && 'Cadastro de marcas'}
+          {isUpdateMode && 'Alteração de marca'}
+        </Typography>
+        {isGetLoading && <CircularProgress />}
+      </Box>
+      <form onSubmit={handleOnSubmit}>
+        <Grid container direction="column" spacing={2} alignContent="center">
+          <Grid container item xs={8}>
+            <TextField
+              onChange={handleBrandChange}
+              onBlur={validateFields}
+              helperText={errors.brand.text}
+              error={!errors.brand.valid}
+              name="brand"
+              id="brand"
+              label="Marca"
+              type="text"
+              variant="outlined"
+              fullWidth
+              required
+              margin="normal"
+            />
+          </Grid>
+          <Grid item container justify="space-between" xs={8}>
+            <FormButton to="/usuarios" isLink>
+              Cancelar
+            </FormButton>
+            {isRegistryMode &&
+              <FormButton
+                color="primary"
+                type="submit"
+                disabled={shouldDisableRegistryButton}
+              >
+                {isRegisterLoading ? <CircularProgress /> : 'Cadastrar'}
+              </FormButton>
+            }
+            {isUpdateMode &&
+              <FormButton
+                color="primary"
+                type="submit"
+                disabled={shouldDisableUpdateButton}
+              >
+                {isUpdateLoading ? <CircularProgress /> : 'Alterar'}
+              </FormButton>
+            }
+          </Grid>
+        </Grid>
+      </form>
+    </>
   );
 };
 
