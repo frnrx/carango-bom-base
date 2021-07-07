@@ -17,7 +17,7 @@ const useBrandRegistry = () => {
     registerBrand(userJWT, brand)
       .then(() => {
         addAlert({ content: 'Marca cadastrada corretamente!', customSeverity: 'success' });
-        history.push('/usuarios');
+        history.push('/marcas');
       })
       .catch(() => {
         addAlert({ content: 'Erro inesperado ao cadastrar marca!', customSeverity: 'error' });

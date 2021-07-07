@@ -18,7 +18,7 @@ const useBrandUpdate = (brandId, setBrand) => {
     updateBrand(userJWT, brandId, brand)
       .then(() => {
         addAlert({ content: 'Marca atualizada corretamente!', customSeverity: 'success' });
-        history.push('/usuarios');
+        history.push('/marcas');
       })
       .catch(() => {
         addAlert({ content: 'Erro inesperado ao atualizar marca!', customSeverity: 'error' });
@@ -39,7 +39,7 @@ const useBrandUpdate = (brandId, setBrand) => {
           content: 'Erro inesperado ao carregar informações da marca!',
           customSeverity: 'error',
         });
-        history.push('/usuarios');
+        history.push('/marcas');
       })
       .finally(() => {
         setIsGetLoading(false);

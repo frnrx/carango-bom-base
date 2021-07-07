@@ -23,7 +23,7 @@ export const registerBrand = (userJWT, brand) => {
     body: JSON.stringify({ nome: brand }),
   };
 
-  return fetch(`${API_URL}/marca`, requestOptions).then(fetchResponseHandler);
+  return fetch(`${API_URL}/marcas`, requestOptions).then(fetchResponseHandler);
 };
 
 export const updateBrand = (userJWT, brandId, brand) => {
@@ -36,11 +36,11 @@ export const updateBrand = (userJWT, brandId, brand) => {
     body: JSON.stringify({ nome: brand }),
   };
 
-  return fetch(`${API_URL}/marca/${brandId}`, requestOptions).then(fetchResponseHandler);
+  return fetch(`${API_URL}/marcas/${brandId}`, requestOptions).then(fetchResponseHandler);
 };
 
 export const getBrand = (brandId, userJWT) => {
   const requestOptions = { method: 'GET', headers: buildAuthHeader(userJWT) };
 
-  return fetch(`${API_URL}/marca/${brandId}`, requestOptions).then(fetchResponseHandler);
+  return fetch(`${API_URL}/marcas/${brandId}`, requestOptions).then(fetchResponseHandler);
 };

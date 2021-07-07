@@ -45,7 +45,7 @@ describe('Brands services', () => {
 
       const expectedBody = { nome: mockedBrand };
       expect(window.fetch).toHaveBeenCalledWith(
-        `${API_URL}/marca`,
+        `${API_URL}/marcas`,
         {
           method: 'POST',
           headers: {
@@ -67,7 +67,7 @@ describe('Brands services', () => {
 
       const expectedBody = { nome: mockedBrand };
       expect(window.fetch).toHaveBeenCalledWith(
-        `${API_URL}/marca/${mockedBrandId}`,
+        `${API_URL}/marcas/${mockedBrandId}`,
         {
           method: 'PUT',
           headers: {
@@ -87,7 +87,7 @@ describe('Brands services', () => {
       getBrand(mockedBrandId, mockedJWT);
   
       expect(window.fetch).toHaveBeenCalledWith(
-        `${API_URL}/marca/${mockedBrandId}`,
+        `${API_URL}/marcas/${mockedBrandId}`,
         { method: 'GET', headers: buildAuthHeader(mockedJWT) },
       );
     });

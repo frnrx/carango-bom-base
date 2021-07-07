@@ -28,7 +28,7 @@ describe('useBrandRegistry', () => {
   );
 
   describe('registerBrand handling', () => {
-    it('should redirect user to /usuarios and call addAlert after the brand is registered',
+    it('should redirect user to /marcas and call addAlert after the brand is registered',
       async () => {
         registerBrand.mockImplementationOnce(() => Promise.resolve());
 
@@ -41,7 +41,7 @@ describe('useBrandRegistry', () => {
           content: 'Marca cadastrada corretamente!',
           customSeverity: 'success',
         });
-        expect(mockHistoryPush).toHaveBeenCalledWith('/usuarios');
+        expect(mockHistoryPush).toHaveBeenCalledWith('/marcas');
       }
     );
     

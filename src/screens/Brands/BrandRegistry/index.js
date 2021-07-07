@@ -56,7 +56,7 @@ const BrandRegistry = () => {
               onChange={handleBrandChange}
               onBlur={validateFields}
               helperText={errors.brand.text}
-              error={!errors.brand.valid}
+              error={errors.brand.showError}
               name="brand"
               id="brand"
               label="Marca"
@@ -68,7 +68,7 @@ const BrandRegistry = () => {
             />
           </Grid>
           <Grid item container justify="space-between" xs={8}>
-            <FormButton to="/usuarios" isLink>
+            <FormButton to="/marcas" isLink>
               Cancelar
             </FormButton>
             {isRegistryMode &&

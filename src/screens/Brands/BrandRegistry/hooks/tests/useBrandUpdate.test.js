@@ -28,7 +28,7 @@ describe('useBrandUpdate', () => {
   );
 
   describe('updateBrand handling', () => {
-    it('should redirect user to /usuarios and call addAlert after the brand is updated correctly',
+    it('should redirect user to /marcas and call addAlert after the brand is updated correctly',
       async () => {
         updateBrand.mockImplementationOnce(() => Promise.resolve());
 
@@ -41,7 +41,7 @@ describe('useBrandUpdate', () => {
           content: 'Marca atualizada corretamente!',
           customSeverity: 'success',
         });
-        expect(mockHistoryPush).toHaveBeenCalledWith('/usuarios');
+        expect(mockHistoryPush).toHaveBeenCalledWith('/marcas');
       }
     );
     
@@ -83,7 +83,7 @@ describe('useBrandUpdate', () => {
       expect(getBrand).not.toHaveBeenCalled();
     });
 
-    it('should redirect to /usuarios & call addAlert when getBrand returns an error', async () => {
+    it('should redirect to /marcas & call addAlert when getBrand returns an error', async () => {
       const mockedServiceReturn = { error: 'error' };
       getBrand.mockImplementationOnce(() => Promise.reject(mockedServiceReturn));
   
@@ -93,7 +93,7 @@ describe('useBrandUpdate', () => {
         content: 'Erro inesperado ao carregar informações da marca!',
         customSeverity: 'error',
       });
-      expect(mockHistoryPush).toHaveBeenCalledWith('/usuarios');
+      expect(mockHistoryPush).toHaveBeenCalledWith('/marcas');
     });
 
     it('should set isGetLoading to true at start of the getBrand and to false after that',
