@@ -11,7 +11,8 @@ import {
   FormHelperText,
   MenuItem,
   Box,
-  Typography
+  Typography,
+  CircularProgress,
 } from '@material-ui/core';
 
 import FormButton from '../../../components/FormButton';
@@ -19,18 +20,22 @@ import useErrors from '../../../hooks/useErrors';
 
 import useBrands from './hooks/useBrands';
 import useVehicleRegistry from './hooks/useVehicleRegistry';
+import useVehicleUpdate from './hooks/useVehicleUpdate';
 import validations from './validations';
 
 const VehicleRegistry = () => {
   const { brands } = useBrands();
   const { pathname } = useLocation();
   const { vehicleId } = useParams();
-  const { registerVehicle, updateVehicle } = useVehicleRegistry();
+  const { register: registerVehicle, isLoading: isRegisterLoading } = useVehicleRegistry();
+  const { update: updateVehicle, isLoading: isUpdateLoading } = useVehicleUpdate();
   const [brand, setBrand] = React.useState({});
   const [model, setModel] = React.useState('');
   const [year, setYear] = React.useState();
   const [value, setValue] = React.useState();
   const [errors, validateFields, isFormValid] = useErrors(validations);
+  const shouldDisableRegistryButton = !isFormValid() || isRegisterLoading;
+  const shouldDisableUpdateButton = !isFormValid() || isUpdateLoading;
 
   const isRegistryMode = pathname.includes('/cadastro-veiculo');
   const isUpdateMode = pathname.includes('/alteracao-veiculo');
@@ -129,25 +134,25 @@ const VehicleRegistry = () => {
             </FormControl>
           </Grid>
           <Grid item container justify="space-between" xs={8}>
-            <FormButton to="/usuarios" isLink>
+            <FormButton to="/" isLink>
               Cancelar
             </FormButton>
             {isRegistryMode &&
               <FormButton
                 color="primary"
                 type="submit"
-                disabled={!isFormValid()}
+                disabled={shouldDisableRegistryButton}
               >
-                Cadastrar
+                {isRegisterLoading ? <CircularProgress /> : 'Cadastrar'}
               </FormButton>
             }
             {isUpdateMode &&
               <FormButton
                 color="primary"
                 type="submit"
-                disabled={!isFormValid()}
+                disabled={shouldDisableUpdateButton}
               >
-                Alterar
+                {isUpdateLoading ? <CircularProgress /> : 'Alterar'}
               </FormButton>
             }
           </Grid>

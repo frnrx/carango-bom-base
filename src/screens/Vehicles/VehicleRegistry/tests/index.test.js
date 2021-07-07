@@ -6,11 +6,13 @@ import VehicleRegistry from '..';
 
 import useBrands from '../hooks/useBrands';
 import useVehicleRegistry from '../hooks/useVehicleRegistry';
+import useVehicleUpdate from '../hooks/useVehicleUpdate';
 import brandsParser from '../brandsParser';
 import mockedBrands from '../hooks/tests/mockedBrands';
 
 jest.mock('../hooks/useBrands');
 jest.mock('../hooks/useVehicleRegistry');
+jest.mock('../hooks/useVehicleUpdate');
 
 const mockedVehicleId = 123;
 let mockedLocationPathname = '/cadastro-veiculo';
@@ -33,7 +35,8 @@ describe('Create/update vehicle form', () => {
 
   beforeEach(() => {
     useBrands.mockReturnValue({ brands: brandsParser(mockedBrands) });
-    useVehicleRegistry.mockReturnValue({ registerVehicle: jest.fn(), updateVehicle: jest.fn() });
+    useVehicleRegistry.mockReturnValue({ register: jest.fn() });
+    useVehicleUpdate.mockReturnValue({ update: jest.fn() });
     render(
       <MemoryRouter>
         <VehicleRegistry />
@@ -85,6 +88,32 @@ describe('Create/update vehicle form', () => {
       const renderedOptions = screen.getAllByRole('option');
       expect(renderedOptions).toHaveLength(mockedBrands.length);
     });
+
+    it('should render the loading component when the register is loading (registry mode)', () => {
+      cleanup();
+      mockedLocationPathname = '/cadastro-veiculo';
+      useVehicleRegistry.mockReturnValue({ register: jest.fn(), isLoading: true });
+      useVehicleUpdate.mockReturnValue({ update: jest.fn() });
+      const { getByRole } = render(
+        <MemoryRouter>
+          <VehicleRegistry />
+        </MemoryRouter>,
+      );
+      expect(getByRole('progressbar')).toBeInTheDocument();
+    });
+
+    it('should render the loading component when the update is loading (update mode)', () => {
+      cleanup();
+      mockedLocationPathname = '/alteracao-veiculo';
+      useVehicleRegistry.mockReturnValue({ register: jest.fn() });
+      useVehicleUpdate.mockReturnValue({ update: jest.fn(), isLoading: true });
+      const { getByRole } = render(
+        <MemoryRouter>
+          <VehicleRegistry />
+        </MemoryRouter>,
+      );
+      expect(getByRole('progressbar')).toBeInTheDocument();
+    });
   });
 
   describe('form functioning', () => {
@@ -93,10 +122,8 @@ describe('Create/update vehicle form', () => {
       const mockedUpdateService = jest.fn();
       mockedLocationPathname = `/alteracao-veiculo/${mockedVehicleId}`;
       useBrands.mockReturnValue({ brands: brandsParser(mockedBrands) });
-      useVehicleRegistry.mockReturnValue({
-        registerVehicle: jest.fn(),
-        updateVehicle: mockedUpdateService,
-      });
+      useVehicleRegistry.mockReturnValue({ register: jest.fn() });
+      useVehicleUpdate.mockReturnValue({ update: mockedUpdateService });
       const { getByRole, getAllByRole } = render(
         <MemoryRouter>
           <VehicleRegistry />
@@ -125,7 +152,7 @@ describe('Create/update vehicle form', () => {
 
       const expectedForm = {
         vehicleId: mockedVehicleId,
-        brand: { id: 32, nome: 'FIAT' },
+        brand: { id: 32, name: 'FIAT' },
         model: 'Fake car mock',
         year: '2000',
         value: '100000',
@@ -147,10 +174,8 @@ describe('Create/update vehicle form', () => {
       const mockedRegisterVehicle = jest.fn();
       mockedLocationPathname = '/cadastro-veiculo';
       useBrands.mockReturnValue({ brands: brandsParser(mockedBrands) });
-      useVehicleRegistry.mockReturnValue({
-        registerVehicle: mockedRegisterVehicle,
-        updateVehicle: jest.fn(),
-      });
+      useVehicleRegistry.mockReturnValue({ register: mockedRegisterVehicle });
+      useVehicleUpdate.mockReturnValue({ update: jest.fn() });
       const { getByRole, getAllByRole } = render(
         <MemoryRouter>
           <VehicleRegistry />
@@ -178,7 +203,7 @@ describe('Create/update vehicle form', () => {
       fireEvent.focusOut(valueInput);
 
       const expectedForm = {
-        brand: { id: 32, nome: 'FIAT' },
+        brand: { id: 32, name: 'FIAT' },
         model: 'Fake car mock',
         year: '2000',
         value: '100000',

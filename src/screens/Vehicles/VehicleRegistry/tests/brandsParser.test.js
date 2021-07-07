@@ -10,11 +10,11 @@ describe('brandsParser', () => {
     const expectedReturn = [
       {
         label: 'FORD',
-        value: { id: 34, nome: 'FORD' },
+        value: { id: 34, name: 'FORD' },
       },
       {
         label: 'FIAT',
-        value: { id: 32, nome: 'FIAT' },
+        value: { id: 32, name: 'FIAT' },
       },
     ];
     expect(brandsParser(mockedBrandsServiceGetAllReturn)).toEqual(expectedReturn);
