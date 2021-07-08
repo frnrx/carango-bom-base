@@ -13,14 +13,17 @@ describe('User registration services', () => {
   });
 
   it('should call the fetch function with the correct url', async () => {
+    const mockedName = 'Aaron';
     const mockedEmail = 'a@a.com';
     const mockedPassword = '12345678';
-    userRegistrationService(mockedEmail, mockedPassword);
+    userRegistrationService(mockedName, mockedEmail, mockedPassword);
 
     expect(window.fetch).toHaveBeenCalledWith(`${API_URL}/usuario`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email: mockedEmail, senha: mockedPassword }),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ name: mockedName, email: mockedEmail, password: mockedPassword }),
     });
   });
 });

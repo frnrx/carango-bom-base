@@ -3,16 +3,19 @@ import { useHistory } from 'react-router-dom';
 
 import { userRegistrationService } from '../services';
 import { SnackBarContext } from '../../../../contexts/snackbar';
+import { AuthenticationContext } from '../../../../contexts/authentication';
 
 const useUserRegistration = () => {
   const [isLoading, setIsLoading] = useState(false);
   const history = useHistory();
-  const { addAlert } = useContext(SnackBarContext);
 
-  const register = (email, password) => {
+  const { addAlert } = useContext(SnackBarContext);
+  const { userJWT } = useContext(AuthenticationContext);
+
+  const register = (name, email, password) => {
     setIsLoading(true);
 
-    userRegistrationService(email, password)
+    userRegistrationService(name, email, password, userJWT)
       .then(() => {
         history.push('/usuarios');
       })

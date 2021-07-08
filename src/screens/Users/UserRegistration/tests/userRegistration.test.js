@@ -4,6 +4,7 @@ import { render, screen, fireEvent, act, waitFor } from '@testing-library/react'
 import { createMemoryHistory } from 'history';
 
 import { SnackBarContext } from '../../../../contexts/snackbar';
+import { AuthenticationContext } from '../../../../contexts/authentication';
 
 import UserRegistration from '..';
 import { userRegistrationService } from '../services';
@@ -12,6 +13,7 @@ jest.mock('../services');
 
 describe('UserRegistration screen', () => {
   let header;
+  let nameInput;
   let emailInput;
   let passwordInput;
   let passwordConfirmationInput;
@@ -36,6 +38,7 @@ describe('UserRegistration screen', () => {
     );
 
     header = screen.getByRole('heading', { name: /Cadastro de usuário/i });
+    nameInput = screen.getByRole('textbox', { name: /Nome/i });
     emailInput = screen.getByRole('textbox', { name: /E-mail/i });
     passwordInput = screen.getByLabelText('Senha');
     passwordConfirmationInput = screen.getByLabelText('Confirmação da senha');
@@ -45,6 +48,7 @@ describe('UserRegistration screen', () => {
 
   it('should render all the components correctly', () => {
     expect(header).toBeInTheDocument();
+    expect(nameInput).toBeInTheDocument();
     expect(emailInput).toBeInTheDocument();
     expect(passwordInput).toBeInTheDocument();
     expect(passwordConfirmationInput).toBeInTheDocument();
@@ -54,6 +58,16 @@ describe('UserRegistration screen', () => {
   });
 
   it('should only enable the submit button when all fields are filled', () => {
+    expect(submitButton).toHaveAttribute('disabled');
+
+    fireEvent.change(nameInput, {
+      target: {
+        value: 'John',
+      },
+    });
+
+    fireEvent.focusOut(nameInput);
+
     expect(submitButton).toHaveAttribute('disabled');
 
     fireEvent.change(emailInput, {
@@ -85,6 +99,22 @@ describe('UserRegistration screen', () => {
     fireEvent.focusOut(passwordConfirmationInput);
 
     expect(submitButton).not.toBeDisabled();
+  });
+
+  it('should keep the button disabled when the name don`t meet the requirements', () => {
+    fireEvent.change(nameInput, {
+      target: {
+        value: 'joe',
+      },
+    });
+
+    fireEvent.focusOut(nameInput);
+
+    const errorText = screen.getByText('Nome deve ter ao menos 4 caracteres.');
+
+    expect(errorText).toBeInTheDocument();
+
+    expect(submitButton).toHaveAttribute('disabled');
   });
 
   it('should keep the button disabled when the email don`t meet the requirements', () => {
@@ -153,29 +183,31 @@ describe('UserRegistration screen', () => {
 });
 
 describe('User registration service usage', () => {
+  let nameInput;
   let emailInput;
   let passwordInput;
   let passwordConfirmationInput;
   let submitButton;
 
   let history;
-  let mockedValue;
+
+  const mockedSnackbarValue = { addAlert: jest.fn() };
+  const mockedAuthValue = { userJWT: 'fakeuserjwt' };
 
   beforeEach(() => {
     history = createMemoryHistory();
 
-    mockedValue = {
-      addAlert: jest.fn(),
-    };
-
     render(
-      <SnackBarContext.Provider value={mockedValue}>
-        <Router history={history}>
-          <UserRegistration />
-        </Router>
+      <SnackBarContext.Provider value={mockedSnackbarValue}>
+        <AuthenticationContext.Provider value={mockedAuthValue}>
+          <Router history={history}>
+            <UserRegistration />
+          </Router>
+        </AuthenticationContext.Provider>
       </SnackBarContext.Provider>,
     );
 
+    nameInput = screen.getByRole('textbox', { name: /Nome/i });
     emailInput = screen.getByRole('textbox', { name: /E-mail/i });
     passwordInput = screen.getByLabelText('Senha');
     passwordConfirmationInput = screen.getByLabelText('Confirmação da senha');
@@ -186,6 +218,14 @@ describe('User registration service usage', () => {
     const mockResolvedValue = { data: {} };
     userRegistrationService.mockImplementationOnce(() => Promise.resolve(mockResolvedValue));
 
+    fireEvent.change(nameInput, {
+      target: {
+        value: 'John',
+      },
+    });
+
+    fireEvent.focusOut(nameInput);
+
     fireEvent.change(emailInput, {
       target: {
         value: 'johndoe@doe.com',
@@ -217,7 +257,12 @@ describe('User registration service usage', () => {
     });
 
     await waitFor(() =>
-      expect(userRegistrationService).toHaveBeenCalledWith('johndoe@doe.com', '123456'),
+      expect(userRegistrationService).toHaveBeenCalledWith(
+        'John',
+        'johndoe@doe.com',
+        '123456',
+        'fakeuserjwt',
+      ),
     );
 
     expect(history.location.pathname).toBe('/usuarios');
@@ -227,6 +272,14 @@ describe('User registration service usage', () => {
     const mockRejectedValue = { error: 'error' };
     userRegistrationService.mockImplementationOnce(() => Promise.reject(mockRejectedValue));
 
+    fireEvent.change(nameInput, {
+      target: {
+        value: 'John',
+      },
+    });
+
+    fireEvent.focusOut(nameInput);
+
     fireEvent.change(emailInput, {
       target: {
         value: 'johndoe@doe.com',
@@ -258,10 +311,15 @@ describe('User registration service usage', () => {
     });
 
     await waitFor(() =>
-      expect(userRegistrationService).toHaveBeenCalledWith('johndoe@doe.com', '123456'),
+      expect(userRegistrationService).toHaveBeenCalledWith(
+        'John',
+        'johndoe@doe.com',
+        '123456',
+        'fakeuserjwt',
+      ),
     );
 
-    expect(mockedValue.addAlert).toHaveBeenCalledWith({
+    expect(mockedSnackbarValue.addAlert).toHaveBeenCalledWith({
       content: 'Não foi possível criar o usuário.',
       customSeverity: 'error',
     });
