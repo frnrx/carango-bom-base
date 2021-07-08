@@ -8,6 +8,7 @@ import VehiclesList from '../screens/Vehicles/VehiclesList';
 import VehicleRegistry from '../screens/Vehicles/VehicleRegistry';
 import UserRegistration from '../screens/Users/UserRegistration';
 import UsersList from '../screens/Users/UsersList';
+import Dashboard from '../screens/Dashboard';
 
 import AuthenticationRoute from './AuthenticationRoute';
 
@@ -35,7 +36,7 @@ const Routes = () => (
       <UsersList />
     </AuthenticationRoute>
     <AuthenticationRoute exact path="/dashboard" isPrivate>
-      <div>dashboard</div>
+      <Dashboard />
     </AuthenticationRoute>
     <AuthenticationRoute exact path="/login">
       <Login />
