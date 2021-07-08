@@ -140,10 +140,7 @@ describe('Create/update brand form', () => {
       const updateButton = getByRole('button', { name: 'Alterar' });
       fireEvent.click(updateButton);
   
-      expect(mockedUpdateService).toHaveBeenCalledWith(
-        expectedForm.vehicleId,
-        expectedForm.brand,
-      );
+      expect(mockedUpdateService).toHaveBeenCalledWith(expectedForm.brand);
     });
 
     it('should send the data correctly to the registry service when a user presses submit', () => {

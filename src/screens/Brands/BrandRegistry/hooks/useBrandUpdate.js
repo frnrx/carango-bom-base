@@ -50,7 +50,7 @@ const useBrandUpdate = (brandId, setBrand) => {
     if (brandId) {
       loadBrand();
     }
-  }, []);
+  }, [brandId]);
 
   return { update, isUpdateLoading, isGetLoading };
 };

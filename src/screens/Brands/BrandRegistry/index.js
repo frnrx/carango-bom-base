@@ -36,7 +36,7 @@ const BrandRegistry = () => {
     if (isRegistryMode) {
       registerBrand(brand);
     } else if (isUpdateMode) {
-      updateBrand(brandId, brand);
+      updateBrand(brand);
     }
   };
 
@@ -57,6 +57,7 @@ const BrandRegistry = () => {
               onBlur={validateFields}
               helperText={errors.brand.text}
               error={errors.brand.showError}
+              value={brand}
               name="brand"
               id="brand"
               label="Marca"
