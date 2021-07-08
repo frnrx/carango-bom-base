@@ -8,7 +8,7 @@ describe('Login services', () => {
   beforeEach(() => {
     window.fetch.mockResolvedValueOnce({
       ok: true,
-      json: async () => ({success: true}),
+      json: async () => ({ success: true }),
     });
   });
   it('should call the fetch function with the correct url', async () => {
@@ -16,13 +16,10 @@ describe('Login services', () => {
     const mockedPassword = '12345678';
     loginService(mockedEmail, mockedPassword);
 
-    expect(window.fetch).toHaveBeenCalledWith(
-      `${API_URL}/auth`,
-      {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email: mockedEmail, senha: mockedPassword }),
-      },
-    );
+    expect(window.fetch).toHaveBeenCalledWith(`${API_URL}/auth`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email: mockedEmail, password: mockedPassword }),
+    });
   });
 });
