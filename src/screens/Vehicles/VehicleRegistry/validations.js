@@ -12,7 +12,7 @@ const validations = {
     };
   },
   year: (data) => {
-    if (data && Number(data) > 1800 && Number(data) < currentYear) {
+    if (data && Number(data) > 1800 && Number(data) <= currentYear + 1) {
       return { valid: true, showError: false };
     }
     return {
